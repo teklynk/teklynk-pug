@@ -1,0 +1,26 @@
+footer {
+    background-color: $base-color1;
+    color: #eee;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    a {
+        color: $base-color-alt2;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-weight: bold;
+        &:hover, &:focus, &.active {
+            color: $base-color-alt2;
+            text-decoration: underline;
+        }
+    }
+    .list-inline-item:not(:last-child) {
+        margin-right: 1.5rem;
+    }
+    i {
+        font-size: 2em;
+    }
+}
+
+.footer-logo {
+    max-width: 160px;
+}

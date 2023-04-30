@@ -1,0 +1,16 @@
+header
+    a.visually-hidden-focusable(href="#main") Skip to main content
+header.sticky-top#topNav
+    .container-fluid.g-0
+        nav.navbar.navbar-expand-lg.bg-body-tertiary
+            .container
+                button.navbar-toggler.custom-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#navbarNavDropdown", aria-controls="navbarNavDropdown", aria-expanded="false", aria-label="Toggle navigation")
+                    span.navbar-toggler-icon
+                .collapse.navbar-collapse#navbarNavDropdown
+                    ul.navbar-nav.me-auto
+                        li.nav-item
+                            a.nav-link(href="/",  class=(page === "home" ? "active" : undefined) target="_self") Home
+                        li.nav-item
+                            a.nav-link(href="/about", class=(page === "about" ? "active" : undefined), target="_self") About
+                    .d-flex
+                        include ./social-media-links.pug
