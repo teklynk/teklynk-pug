@@ -30,14 +30,14 @@ main {
         font-family: $base-font1;
     }
     p, a, li {
-        font-size: 1.1em;
+        font-size: inherit;
     }
     a {
         text-decoration: none;
-        color: $base-color1;
+        color: $base-color-alt1;
         &:hover, &:focus, &:active {
             text-decoration: underline;
-            color: $base-color-alt1;
+            color: $base-color-alt2;
         }
     }
     h1 {

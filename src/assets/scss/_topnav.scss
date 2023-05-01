@@ -5,6 +5,7 @@ nav {
         font-family: $base-font1;
         color: #eee !important;
         &:hover, &:focus, &.active, &.show {
+            color: #ccc !important;
             text-decoration: underline;
         }
     }
@@ -18,7 +19,10 @@ nav {
     a.navbar-brand {
         font-weight: bold;
         text-transform: uppercase;
-        color: #eee
+        color: #eee;
+        &:hover, &:focus, &.active {
+            color: #ccc !important;
+        }
     }
 }
 
@@ -36,7 +40,7 @@ img.navbar-logo {
         color: #eee;
         &:hover, &:focus, &.active {
             background-color: $base-color-alt2;
-            color: #eee;
+            color: #ccc;
         }
     }
 }
