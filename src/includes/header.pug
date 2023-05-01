@@ -4,13 +4,16 @@ header.sticky-top#topNav
     .container-fluid.g-0
         nav.navbar.navbar-expand-lg.bg-body-tertiary
             .container
+                a.navbar-brand.text-white(href="/") Teklynk
                 button.navbar-toggler.custom-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#navbarNavDropdown", aria-controls="navbarNavDropdown", aria-expanded="false", aria-label="Toggle navigation")
                     span.navbar-toggler-icon
                 .collapse.navbar-collapse#navbarNavDropdown
-                    ul.navbar-nav.me-auto
+                    ul.navbar-nav.ms-auto
                         li.nav-item
-                            a.nav-link(href="/",  class=(page === "home" ? "active" : undefined) target="_self") Home
+                            a.nav-link(href="/", class=(page === "home" ? "active" : undefined), aria-current=(page === "home" ? "true" : "false"), target="_self") Home
                         li.nav-item
-                            a.nav-link(href="/about", class=(page === "about" ? "active" : undefined), target="_self") About
-                    .d-flex
-                        include ./social-media-links.pug
+                            a.nav-link(href="/blog", class=(page === "blog" ? "active" : undefined), aria-current=(page === "blog" ? "true" : "false"), target="_self") Blog
+                        li.nav-item
+                            a.nav-link(href="https://github.com/teklynk", target="_blank") Github
+                        li.nav-item
+                            a.nav-link(href="/about", class=(page === "about" ? "active" : undefined), aria-current=(page === "about" ? "true" : "false"), target="_self") About

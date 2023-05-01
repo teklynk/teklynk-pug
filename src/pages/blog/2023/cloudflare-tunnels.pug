@@ -1,0 +1,19 @@
+extends ../../../layout/default.pug
+
+block nav
+    - var page = "cloudflare-tunnels"
+
+block title
+    | Teklynk - Cloudflare Tunnels
+
+block main_container
+    .home
+        .container
+            block content
+                .container.pb-5.pt-5
+                    h1 Cloudflare Tunnels
+                    p Cloudflare Tunnels is a tool that allows you to expose your locally hosted web server or application to the internet through Cloudflare's global network. This can be useful for a variety of purposes, such as testing a website on a local development environment, or securely accessing a private application that is not publicly accessible.
+                    p To use Cloudflare Tunnels, you need to install the Cloudflare daemon on your local machine, which creates a secure connection between your machine and the Cloudflare network. Once the daemon is installed, you can create a tunnel that maps a local port on your machine to a publicly accessible domain name on the Cloudflare network.
+                    p For example, if you have a web server running on port 8080 on your local machine, you can create a Cloudflare Tunnel that maps that port to a domain name like example.com. Once the tunnel is created, anyone can access your web server by visiting example.com, and the traffic will be securely routed through the Cloudflare network to your local machine.
+                    p Cloudflare Tunnels also provides additional security features, such as rate limiting and firewall rules, to help protect your application from malicious traffic. It also includes a dashboard where you can monitor traffic and manage your tunnels.
+                    p Overall, Cloudflare Tunnels is a powerful tool for exposing local applications to the internet securely and reliably.

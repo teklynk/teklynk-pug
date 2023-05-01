@@ -4,6 +4,7 @@
 @import 'footer';
 
 body {
+    font-family: $base-font1;
     height: auto !important;
     background-color: $base-color1;
 }
@@ -27,6 +28,9 @@ img.img-rounded {
 main {
     a, p, li, h1, h2, h3 {
         font-family: $base-font1;
+    }
+    p, a, li {
+        font-size: 1.1em;
     }
     a {
         text-decoration: none;
