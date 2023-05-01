@@ -91,3 +91,13 @@ iframe {
 img.discord-logo {
     max-width: 250px;
 }
+
+.list-group-item-dark {
+    color: #eee;
+    background-color: transparent;
+}
+
+.list-group-item-dark.list-group-item-action:hover, .list-group-item-dark.list-group-item-action:focus {
+    color: #eee;
+    background-color: $base-color1;
+}
