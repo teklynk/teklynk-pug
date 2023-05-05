@@ -1,24 +1,29 @@
-nav {
-    font-family: $base-font1;
+#topNav {
     background-color: $base-color1;
-    a.nav-link {
+}
+
+nav {
+    .navbar-nav {
         font-family: $base-font1;
-        color: #eee !important;
-        &:hover, &:focus, &.active, &.show {
-            text-decoration: underline;
+        a.nav-link {
+            font-family: $base-font1;
+            color: $base-color-alt2;
+            &:hover, &:focus, &.active, &.show {
+                color: $base-color-alt4;
+                text-decoration: underline;
+            }
         }
+        a.dropdown-item {
+            &:hover, &:focus, &:active, &.active {
+                background-color: transparent;
+                text-decoration: underline;
+            }
+        }  
     }
-    a.dropdown-item {
-        &:hover, &:focus, &:active, &.active {
-            color: #000 !important;
-            background-color: transparent;
-            text-decoration: underline;
-        }
-    }
-    a.navbar-brand {
+    .navbar-brand {
         font-weight: bold;
         text-transform: uppercase;
-        color: #eee
+        color: $base-color-alt2
     }
 }
 
@@ -33,17 +38,17 @@ img.navbar-logo {
     }
     &-button {
         background-color: $base-color2;
-        color: #eee;
+        color: $base-color-alt2;
         &:hover, &:focus, &.active {
             background-color: $base-color-alt2;
-            color: #eee;
+            color: $base-color-alt2;
         }
     }
 }
 
 .navbar-toggler {
-    border-color: #eee;
-    color: #eee;
+    border-color: $base-color-alt2;
+    color: $base-color-alt2;
 }
 
 .custom-toggler {
@@ -54,6 +59,6 @@ img.navbar-logo {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
-    border-color: #eee;
+    border-color: $base-color-alt2;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }

@@ -34,10 +34,10 @@ main {
     }
     a {
         text-decoration: none;
-        color: $base-color1;
+        color: $base-color-alt3;
         &:hover, &:focus, &:active {
             text-decoration: underline;
-            color: $base-color-alt1;
+            color: $base-color-alt3;
         }
     }
     h1 {
@@ -52,7 +52,7 @@ main {
 .home {
     min-height: 600px;
     background: $base-color2;
-    color: #eee;
+    color: $base-color-alt2;
 }
 
 iframe {
@@ -84,7 +84,7 @@ iframe {
         border-radius: 0;
     }
     i {
-        color: #eee;
+        color: $base-color-alt2;
     }
 }
 
@@ -93,11 +93,11 @@ img.discord-logo {
 }
 
 .list-group-item-dark {
-    color: #eee;
+    color: $base-color-alt2;
     background-color: transparent;
 }
 
 .list-group-item-dark.list-group-item-action:hover, .list-group-item-dark.list-group-item-action:focus {
-    color: #eee;
+    color: $base-color-alt2;
     background-color: $base-color1;
 }
