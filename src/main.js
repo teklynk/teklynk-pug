@@ -1,5 +1,6 @@
 import './assets/scss/styles.scss'
 import 'bootstrap'
+import 'prismjs'
 
 window.main = true;
 

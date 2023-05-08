@@ -16,6 +16,8 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.0",
     "boostrap": "^2.0.0",
-    "bootstrap": "^5.2.3"
+    "bootstrap": "^5.2.3",
+    "jstransformer-markdown-it": "^3.0.0",
+    "prismjs": "^1.29.0"
   }
 }
