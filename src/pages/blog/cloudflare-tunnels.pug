@@ -20,13 +20,14 @@ block main_container
 
                     a(href="") test
 
-                    div.pre-code
-                        :markdown-it(linkify langPrefix='highlight-')
+                    div
+                        :markdown-it(linkify langPrefix='language-')
                             ## This is markdown 
 
                             paragraph in markdown 
 
                             code block in markdown
+                            
                             ```css
                             color: #990000;
                             position: relative;
