@@ -25,6 +25,10 @@ img.img-rounded {
     border-radius: 100%;
 }
 
+pre[class*=language-] {
+    background: $base-color1;
+}
+
 main {
     a, p, li, h1, h2, h3 {
         font-family: $base-font1;
