@@ -1,6 +1,7 @@
 import './assets/scss/styles.scss'
 import 'bootstrap'
 import 'prismjs'
+import 'prismjs/plugins/line-numbers/prism-line-numbers'
 
 window.main = true;
 
