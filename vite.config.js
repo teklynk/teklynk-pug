@@ -21,7 +21,14 @@ export default defineConfig({
             //    baseDir: resolve(__dirname, 'src/language')
             //},
             locals: {},
-            options: {},
+            options: {"pretty": process.env.NODE_ENV === "development"},
         })
-    ]
+    ],
+    build: {
+        rollupOptions: {
+            output: {
+                chunkFileNames: 'assets/main-[hash].js'
+            }
+        }
+    }
 })
