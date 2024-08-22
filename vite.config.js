@@ -3,6 +3,7 @@ import { resolve } from 'path'
 import vitePluginPugI18n from 'vite-plugin-pug-i18n'
 
 export default defineConfig({
+    //base: './', // running the website inside a sub directory
     resolve: {
         alias: {
             '~': resolve(__dirname, './node_modules')
@@ -23,5 +24,13 @@ export default defineConfig({
             locals: {},
             options: {},
         })
-    ]
-})
+    ],
+    build: {
+        rollupOptions: {
+            output: {
+                assetFileNames: 'assets/main-[hash][extname]',
+                entryFileNames: 'assets/main-[hash].js'
+            }
+        }
+    }
+});
