@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import vitePluginPugI18n from 'vite-plugin-pug-i18n'
+import vitePluginGenerateIndex from './vite-plugin-generate-index'
 
 export default defineConfig({
     resolve: {
@@ -22,7 +23,8 @@ export default defineConfig({
             //},
             locals: {},
             options: {"pretty": process.env.NODE_ENV === "development"},
-        })
+        }),
+        vitePluginGenerateIndex()
     ],
     build: {
         rollupOptions: {
