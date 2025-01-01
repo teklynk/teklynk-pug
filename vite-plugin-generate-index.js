@@ -32,7 +32,7 @@ function generateIndex() {
     links.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     let pugContent = `
-.list-group
+.list-group.list-group-flush(id="blog-list")
     `;
 
     links.forEach(({ date, title, fileName }) => {
