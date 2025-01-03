@@ -14,8 +14,12 @@ html(lang=lang)
             include ../includes/header.pug
         main#main(role="main")
             block main_container
-                .container
+            .home
+                .container.pb-5.pt-5
+                    h1 #{title}
+                    h2.small.muted.mb-5 Published on #{moment(date)}
                     block content
+                        
         block footer
             include ../includes/footer.pug
         block script

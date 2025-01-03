@@ -1,5 +1,6 @@
 import { resolve } from 'path';
 import fs from 'node:fs';
+import dateformat from './dateformat';
 
 function extractVars(content) {
     const dateMatch = content.match(/- var date = "(.*)"/);
@@ -26,7 +27,7 @@ function generateIndex() {
         const { date, title } = extractVars(fileContent);
         const fileName = pugFile.replace('.pug', '');
         if (fileName === 'index') return null;
-        return { date, title, fileName };
+        return { date: dateformat(date), title, fileName };
     }).filter(Boolean);
 
     links.sort((a, b) => new Date(b.date) - new Date(a.date));

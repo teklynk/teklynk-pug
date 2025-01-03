@@ -3,6 +3,9 @@ import 'bootstrap'
 import 'prismjs'
 import 'prismjs/components/prism-json'
 import 'prismjs/plugins/line-numbers/prism-line-numbers'
+import moment from 'moment'
+
+window.moment = moment;
 
 window.main = true;
 

@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import vitePluginPugI18n from 'vite-plugin-pug-i18n'
 import vitePluginGenerateIndex from './vite-plugin-generate-index'
+import dateformat from './dateformat'
 
 export default defineConfig({
     resolve: {
@@ -21,8 +22,12 @@ export default defineConfig({
             //langs: {
             //    baseDir: resolve(__dirname, 'src/language')
             //},
-            locals: {},
-            options: {"pretty": process.env.NODE_ENV === "development"},
+            locals: {
+                "moment": dateformat
+            },
+            options: {
+                "pretty": process.env.NODE_ENV === "development"
+            },
         }),
         vitePluginGenerateIndex()
     ],
