@@ -1,17 +1,13 @@
-extends ../layout/default.pug
+extends ../layout/page-layout.pug
 
 block nav
-    - var page = "about"
 
 block title
-    | Teklynk - About
+    - var date = ""
+    - var title = "About"
+    | Teklynk - #{title}
 
-block main_container
-    .home
-        .container
-            block content
-                .container.pb-5.pt-5
-                    h1 About me
-                    p Linux user, Retro video games, Retro consoles, Developer, Programmer, Tinkerer.
-                    h2 About this site 
-                    p This site is built using #[a(href="https://pugjs.org/api/getting-started.html", target="_blank") Pug] and #[a(href="https://vitejs.dev/", target="_blank") Vite], thanks to this #[a(href="https://www.npmjs.com/package/vite-plugin-pug-i18n", target="_blank") vite-plugin-pug-i18n] npm plugin. It is hosted for free using #[a(href="https://pages.cloudflare.com/", target="_blank") Cloudflare Pages]. I simply push changes to Github which then automatically fires off a build on Cloudflare pages. 
+block content
+    p Linux user, Retro video games, Retro consoles, Developer, Programmer, Tinkerer.
+    h2 About this site 
+    p This site is built using #[a(href="https://pugjs.org/api/getting-started.html", target="_blank") Pug] and #[a(href="https://vitejs.dev/", target="_blank") Vite], thanks to this #[a(href="https://www.npmjs.com/package/vite-plugin-pug-i18n", target="_blank") vite-plugin-pug-i18n] npm plugin. It is hosted for free using #[a(href="https://pages.cloudflare.com/", target="_blank") Cloudflare Pages]. I simply push changes to Github which then automatically fires off a build on Cloudflare pages. 

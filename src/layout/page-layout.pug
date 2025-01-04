@@ -14,7 +14,9 @@ html(lang=lang)
             include ../includes/header.pug
         main#main(role="main")
             block main_container
-                .container
+            .home
+                .container.pb-3.pt-3
+                    h1 #{title}
                     block content
         block footer
             include ../includes/footer.pug

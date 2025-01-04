@@ -6,6 +6,7 @@ html(lang=lang)
         meta(name='viewport', content='width=device-width, initial-scale=1.0')
         title
             block title
+                - var date = ""
                 - var title = "Blogs"
                 | Teklynk - #{title}
     body
@@ -16,7 +17,7 @@ html(lang=lang)
         main#main(role="main")
             block main_container
             .home
-                .container.pb-5.pt-5
+                .container.pb-3.pt-3
                     h1 #{title}
                     block content
                     include ../../includes/blog-index.pug
