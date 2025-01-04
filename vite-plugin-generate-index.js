@@ -1,5 +1,6 @@
 import { resolve } from 'path';
 import fs from 'node:fs';
+import moment from 'moment';
 import dateformat from './dateformat';
 
 function extractVars(content) {
@@ -27,18 +28,20 @@ function generateIndex() {
         const { date, title } = extractVars(fileContent);
         const fileName = pugFile.replace('.pug', '');
         if (fileName === 'index') return null;
-        return { date: dateformat(date), title, fileName };
+        return { date, title, fileName };
     }).filter(Boolean);
 
-    links.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // Sort links by date using moment for date comparison
+    links.sort((a, b) => moment(b.date).diff(moment(a.date)));
 
     let pugContent = `
 .list-group.list-group-flush(id="blog-list")
     `;
 
     links.forEach(({ date, title, fileName }) => {
+        const formattedDate = dateformat(date);
         pugContent += ` 
-    a.list-group-item.list-group-item-action.list-group-item-dark(href="/blog/${fileName}")  ${date} - ${title}
+    a.list-group-item.list-group-item-action.list-group-item-dark(href="/blog/${fileName}")  ${formattedDate} - ${title}
         `;
     });
 

@@ -1,12 +1,27 @@
-
-extends ../../layout/blog-layout.pug
-
-block nav
-
-block title
-    - var date = ""
-    - var title = "Blogs"
-    | Teklynk - #{title}
-
-block content
-    include ../../includes/blog-index.pug
+doctype html
+html(lang=lang)
+    head
+        meta(charset='UTF-8')
+        link(rel='icon', href='/assets/icons/favicon.ico')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        title
+            block title
+                - var title = "Blogs"
+                | Teklynk - #{title}
+    body
+        block nav
+            - var page = "blogs"
+        block header
+            include ../../includes/header.pug
+        main#main(role="main")
+            block main_container
+            .home
+                .container.pb-5.pt-5
+                    h1 #{title}
+                    block content
+                    include ../../includes/blog-index.pug
+                        
+        block footer
+            include ../../includes/footer.pug
+        block script
+            script(type='module', src='src/main.js')
