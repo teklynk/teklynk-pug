@@ -7,6 +7,14 @@ html(lang=lang)
         title
             block title
                 | Teklynk
+        meta(name='description', content=description)
+        link(rel="canonical", href="https://www.teklynk.com")
+        meta(property="og:locale" content="en_US")
+        meta(property="og:type", content="website")
+        meta(property="og:title" content=title)
+        meta(property="og:url", content="https://www.teklynk.com")
+        meta(property="og:description", content=description)
+        meta(property="og:image", content="https://www.teklynk.com/assets/images/teklynk-profile.jpg")
     body
         block nav
             - var page = "blogs"
