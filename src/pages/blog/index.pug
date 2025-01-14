@@ -1,0 +1,31 @@
+doctype html
+html(lang=lang)
+    head
+        meta(charset='UTF-8')
+        link(rel='icon', href='/assets/icons/favicon.ico')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        title
+            block title
+                - var date = ""
+                - var title = "Blogs"
+                - var description = ""
+                - var draft = ""
+                | Teklynk - #{title}
+    body
+        block nav
+            - var page = "blogs"
+        block header
+            include ../../includes/header.pug
+        main#main(role="main")
+            block main_container
+            .home
+                .container.pb-3.pt-3
+                    h1 #{title}
+                    block content
+                    include ../../includes/blog-search.pug
+                    include ../../includes/blog-index.pug
+                        
+        block footer
+            include ../../includes/footer.pug
+        block script
+            script(type='module', src='src/main.js')

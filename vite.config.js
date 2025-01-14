@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import vitePluginPugI18n from 'vite-plugin-pug-i18n'
+import vitePluginGenerateIndex from './vite-plugin-generate-index'
+import dateformat from './dateformat'
 
 export default defineConfig({
-    //base: './', // running the website inside a sub directory
     resolve: {
         alias: {
             '~': resolve(__dirname, './node_modules')
@@ -21,16 +22,20 @@ export default defineConfig({
             //langs: {
             //    baseDir: resolve(__dirname, 'src/language')
             //},
-            locals: {},
-            options: {},
-        })
+            locals: {
+                "moment": dateformat
+            },
+            options: {
+                "pretty": process.env.NODE_ENV === "development"
+            },
+        }),
+        vitePluginGenerateIndex()
     ],
     build: {
         rollupOptions: {
             output: {
-                assetFileNames: 'assets/main-[hash][extname]',
-                entryFileNames: 'assets/main-[hash].js'
+                chunkFileNames: 'assets/main-[hash].js'
             }
         }
     }
-});
+})

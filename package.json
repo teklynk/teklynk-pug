@@ -1,20 +1,26 @@
 {
   "name": "vite-project",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "cross-env NODE_ENV=development vite preview",
+    "dev": "cross-env NODE_ENV=development vite build"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
+    "rollup": "3.21.8",
     "sass": "^1.61.0",
-    "vite": "^4.2.0",
-    "vite-plugin-pug-i18n": "^1.4.0"
+    "vite": "4.2.0",
+    "vite-plugin-pug-i18n": "^1.0.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.0",
-    "bootstrap": "^5.2.3"
+    "boostrap": "^2.0.0",
+    "bootstrap": "^5.2.3",
+    "jstransformer-markdown-it": "^3.0.0",
+    "moment": "^2.30.1",
+    "prismjs": "^1.29.0"
   }
 }

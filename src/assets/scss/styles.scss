@@ -25,6 +25,10 @@ img.img-rounded {
     border-radius: 100%;
 }
 
+pre[class*=language-] {
+    background: $base-color1;
+}
+
 main {
     a, p, li, h1, h2, h3 {
         font-family: $base-font1;
@@ -34,10 +38,10 @@ main {
     }
     a {
         text-decoration: none;
-        color: $base-color-alt1;
+        color: $base-color-alt3;
         &:hover, &:focus, &:active {
             text-decoration: underline;
-            color: $base-color-alt2;
+            color: $base-color-alt3;
         }
     }
     h1 {
@@ -52,7 +56,7 @@ main {
 .home {
     min-height: 600px;
     background: $base-color2;
-    color: #eee;
+    color: $base-color-alt2;
 }
 
 iframe {
@@ -84,10 +88,20 @@ iframe {
         border-radius: 0;
     }
     i {
-        color: #eee;
+        color: $base-color-alt2;
     }
 }
 
 img.discord-logo {
     max-width: 250px;
+}
+
+.list-group-item-dark {
+    color: $base-color-alt2;
+    background-color: transparent;
+}
+
+.list-group-item-dark.list-group-item-action:hover, .list-group-item-dark.list-group-item-action:focus {
+    color: $base-color-alt2;
+    background-color: $base-color1;
 }

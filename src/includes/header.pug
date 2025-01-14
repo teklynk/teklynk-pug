@@ -1,16 +1,17 @@
-header
-    a.visually-hidden-focusable(href="#main") Skip to main content
 header.sticky-top#topNav
+    a.visually-hidden-focusable(href="#main") Skip to main content
     .container-fluid.g-0
-        nav.navbar.navbar-expand-lg
+        nav.navbar.navbar-expand-lg.bg-dark
             .container
                 a.navbar-brand.text-white(href="/") Teklynk
-                button.navbar-toggler.custom-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#navbarNavDropdown", aria-controls="navbarNavDropdown", aria-expanded="false", aria-label="Toggle navigation")
-                    span.navbar-toggler-icon
+                button.navbar-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#navbarNavDropdown", aria-controls="navbarNavDropdown", aria-expanded="false", aria-label="Toggle navigation")
+                    span.navbar-toggler-icon.custom-toggler
                 .collapse.navbar-collapse#navbarNavDropdown
                     ul.navbar-nav.ms-auto
                         li.nav-item
                             a.nav-link(href="/", class=(page === "home" ? "active" : undefined), aria-current=(page === "home" ? "true" : "false"), target="_self") Home
+                        li.nav-item
+                            a.nav-link(href="/blog", class=(page === "blog" ? "active" : undefined), aria-current=(page === "blog" ? "true" : "false"), target="_self") Blog
                         li.nav-item
                             a.nav-link(href="https://github.com/teklynk", target="_blank") Github
                         li.nav-item
