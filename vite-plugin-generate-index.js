@@ -6,11 +6,9 @@ import dateformat from './dateformat';
 function extractVars(content) {
     const dateMatch = content.match(/- var date = "(.*)"/);
     const titleMatch = content.match(/- var title = "(.*)"/);
-    const draftMatch = content.match(/- var draft = "(.*)"/);
     return {
         date: dateMatch ? dateMatch[1] : 'Unknown Date',
         title: titleMatch ? titleMatch[1] : 'Untitled',
-        draft: draftMatch ? draftMatch[1] : ''
     };
 }
 
@@ -27,11 +25,10 @@ function generateIndex() {
     const links = pugFiles.map(pugFile => {
         const filePath = resolve(blogPath, pugFile);
         const fileContent = fs.readFileSync(filePath, 'utf-8');
-        const { date, title, draft } = extractVars(fileContent);
+        const { date, title } = extractVars(fileContent);
         const fileName = pugFile.replace('.pug', '');
         if (fileName === 'index') return null;
-        if (draft === 'true') return null;
-        return { date, title, draft, fileName };
+        return { date, title, fileName };
     }).filter(Boolean);
 
     // Sort links by date using moment for date comparison
