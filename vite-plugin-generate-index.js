@@ -51,6 +51,8 @@ function generateIndex() {
 export default function vitePluginGenerateIndex() {
     return {
         name: 'vite-plugin-generate-index',
+        enforce: 'pre',
+        apply: 'build',
         buildStart() {
             generateIndex();
         }

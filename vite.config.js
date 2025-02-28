@@ -7,7 +7,8 @@ import dateformat from './dateformat'
 export default defineConfig({
     resolve: {
         alias: {
-            '~': resolve(__dirname, './node_modules')
+            '~': resolve(__dirname, './node_modules'),
+            '@': resolve(__dirname, './src'),
         }
     },
     preview: {
