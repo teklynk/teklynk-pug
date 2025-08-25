@@ -1,0 +1,107 @@
+extends ../../layout/blog-layout.pug
+
+block nav
+
+block title
+    - var date = "2025-08-24"
+    - var title = "How to maximize Cloudflare security rules"
+    - var description = "Get the most out of your 5 free Cloudflare security rules"
+    | Teklynk - #{title}
+
+block content
+    p Cloudflare offers many powerful features on its free plan, but you are limited to only five custom Security Rules. This tutorial will demonstrate how to maximize those five rules for optimal protection against common threats.
+    p With custom security rules, you can protect your website from malicious bots and crawlers, restrict access to specific IP addresses, implement geo-blocking, and much more.
+    p I have created five rules that provide a strong security baseline:
+    ul 
+        li IP Blocks 
+        li IP Restricted Hostnames 
+        li IP Auth Routes Restricted 
+        li Bots and Crawlers Block 
+        li Geo Restricted Hostnames 
+    p I will go over how each one works and how it can be configured. Once you see these examples, you can then modify and extend these rules further or make them more granular.
+
+    img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 21-37-57.png", alt="")
+
+    h2 IP Blocks
+    p The IP Blocks rule lets you block specific IP addresses from accessing your domain and subdomains. This is useful if you identify a malicious IP address, perhaps from your Cloudflare web traffic analytics.
+    p To create this rule, set the "Rule name" to "IP Blocks".
+    p For the condition "When incoming requests match...", set the "Field" to "IP Source Address" and the "Operator" to "is in". You can then manually add IP addresses to the "Value" text area.
+    p For the action, set "Then take action..." to "Block".
+    p The "Place at" option should be set to "First". Security rules execute in the order you set them, and we want to check for blocked IPs immediately.
+    p Finally, save the rule.
+
+    img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 21-55-59.png", alt="")
+
+    h2 IP Restricted Hostnames 
+    p This rule allows you to restrict entire domains or subdomains to a list of allowed IP addresses. This is ideal for protecting a staging website during development or an admin panel that only a few users should access.
+    p Set the "Rule name" to "IP Restricted Hostnames".
+    p For the condition "When incoming requests match...", create two expressions joined by "And":
+    ol
+        li Set the first expression's "Field" to "IP Source Address" and "Operator" to "is not in". The "Value" should be your list of allowed IP addresses.
+        li Set the second expression's "Field" to "Hostname" and "Operator" to "is in". The "Value" should be the hostnames you want to protect.
+    p This logic blocks any request that is #[strong not] from an allowed IP #[strong and] is for one of the specified hostnames.
+    p Set "Then take action..." to "Block".
+    p "Place at" can be set to "Custom" to position it correctly in your rule list.
+    p Save the rule.
+
+    img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 22-18-14.png", alt="")
+
+    h2 IP Auth Routes Restricted
+    p This rule extends the previous concept to restrict specific URL paths, such as `/admin/`, `/login`, or `/wp-admin`, to certain IP addresses.
+    p Set the "Rule name" to "IP Auth Routes Restricted".
+    p For "When incoming requests match...", you will create three conditions joined by "And":
+    ol
+        li
+            strong IP Source Address
+            |  `is not in` [Your Allowed IPs]
+        li
+            strong Hostname
+            |  `is in` [Your Hostnames]
+        li
+            strong URI Path
+            |  `is in` ["/admin/", "/login", "/wp-admin"]
+    p The screenshot below shows the web routes that I restrict as an example.
+    p This rule blocks any request that is #[strong not] from an allowed IP #[strong and] is for a protected hostname #[strong and] matches one of the sensitive URI paths.
+    p Set "Then take action..." to "Block".
+    p "Place at" should be set as "Custom".
+    p Save the rule.
+
+    img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 22-28-07.png", alt="")
+
+    h2 Bots and Crawlers Block
+    p This rule blocks known search engine crawlers and other bots from accessing specific domains or subdomains. This can be useful for staging sites or private applications that you don't want indexed or scanned.
+    p Set the "Rule name" to "Bots and Crawlers Block".
+    p The logic for this rule is: `(User Agent matches a crawler OR the request is from a Known Bot) AND the Hostname is one you want to protect`.
+    p To build this, you'll need to use the expression editor to group the "Or" conditions.
+    ol
+        li In the first part of the group, set "Field" to "User Agent" and "Operator" to "matches regex". The "Value" should be this regular expression: 
+            div
+                pre
+                    code.language-bash.
+                        ^(googlebot|bingbot|yandexbot|baidubot|duckduckgo|pinterest|twitterbot|facebookbot)i
+        li Click "Or".
+        li In the second part of the group, set "Field" to "Known Bots" and "Operator" to "equals". Enable this by clicking the toggle switch. "Known Bots" is a managed list provided by Cloudflare.
+        li Now, add an "And" condition outside the group. Set its "Field" to "Hostname" and "Operator" to "is in". The "Value" can be one or more hostnames/subdomains.
+    p Set "Then take action..." to "Block".
+    p "Place at" should be set as "Custom".
+    p Save the rule.
+
+    img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 22-38-51.png", alt="")
+
+    h2 Geo Restricted Hostnames
+    p This rule restricts access to your domains or subdomains based on the visitor's country. It's particularly useful if your service is only intended for specific geographic regions.
+    p Set the "Rule name" to "Geo Restricted Hostnames".
+    p For "When incoming requests match...", create two conditions joined by "And":
+    ol
+        li Set the first expression's "Field" to "Country" and "Operator" to "is not in". For the "Value", select the countries you want to #[strong allow] access from.
+        li Set the second expression's "Field" to "Hostname" and "Operator" to "is in". The "Value" should be the hostnames you want to protect.
+    p This rule blocks any request that is #[strong not] from an allowed country #[strong and] is for one of the specified hostnames.
+    p Set "Then take action..." to "Block".
+    p "Place at" should be set as "Custom".
+    p Save the rule.
+
+    img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 22-47-28.png", alt="")
+
+    p With these five security rules as a foundation, you have a flexible and powerful setup for protecting your websites. Feel free to modify these examples and tailor them to your specific needs.
+
+    
