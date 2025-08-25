@@ -74,7 +74,7 @@ block content
     p The logic for this rule is: `(User Agent matches a crawler OR the request is from a Known Bot) AND the Hostname is one you want to protect`.
     p To build this, you'll need to use the expression editor to group the "Or" conditions.
     ol
-        li In the first part of the group, set "Field" to "User Agent" and "Operator" to "matches regex". The "Value" should be this regular expression: 
+        li In the first part of the group, set "Field" to "User Agent" and "Operator" to "equals". The "Value" should be this regular expression: 
             div
                 pre
                     code.language-bash.
