@@ -1,0 +1,161 @@
+extends ../../layout/blog-layout.pug
+
+block nav
+
+block title
+    - var date = "2025-08-25"
+    - var title = "Macro Keypad for shortcuts and scripts"
+    - var description = "Use a macro keypad to execute scripts, run tasks, turn devices on and off, and more"
+    | Teklynk - #{title}
+
+block content
+    img.img-fluid.mb-4.shadow(src="/assets/images/keyboard_macropad.jpg", alt="A 12-button, 2-knob macro keypad on a desk.")
+
+    p Years ago, I bought a macro keypad from AliExpress. I'd seen these little gadgets on various sites, and their potential for custom shortcuts and automations immediately intrigued me. For just $20, I got a generic 12-button, 2-knob keypad with no branding or model number.
+    p My excitement quickly faded when I plugged it in. The keys were mapped to a strange, seemingly random set of combinations. The seller provided a link to a configuration tool, but it was a Windows-only program with an interface that appeared to be in Chinese. As a Linux user, this was a dead end. Defeated, I tossed the keypad on a shelf, where it collected dust for a few years.
+    p Recently, I stumbled upon a game-changing project on GitHub: #[a(href="https://github.com/kriomant/ch57x-keyboard-tool", target="_blank") ch57x-keyboard-tool]. This open-source tool allows you to flash custom firmware onto these generic CH57x-based keypads. Configuration is done through a simple YAML file, giving you complete control over keybinds and macros. Finally, I could unlock the keypad's true potential.
+
+    p I created the following `config.yml` to define my desired layout.
+
+    div.shadow 
+        pre.line-numbers
+            code.language-yaml.
+                orientation: normal
+
+                rows: 3
+                columns: 4
+                knobs: 2
+
+                layers:
+                    - buttons:
+                        - ["win-alt-1", "win-alt-2", "win-alt-3", "win-alt-4"]
+                        - ["win-alt-5", "win-alt-6", "win-alt-7", "win-alt-8"]
+                        - ["win-alt-9", "win-alt-0", "win-alt-minus", "win-alt-equal"]
+                    knobs:
+                        - ccw: 'volumedown'
+                          press: 'mute'
+                          cw: 'volumeup'
+                        - ccw: 'ctrl-wheeldown'
+                          press: 'ctrl-0'
+                          cw: 'ctrl-wheelup'
+
+    p As you can see in the configuration, each button is mapped to a unique key combination, like `win-alt-1`, `win-alt-2`, and so on (easy to remember). I configured the two rotary knobs to control system volume and application zoom, which are two of my most frequent adjustments.
+
+    p With the keypad now sending custom key combinations, the next step was to make them do something useful. My operating system, Linux Mint, has a built-in tool for creating custom keyboard shortcuts (Settings > Keyboard > Shortcuts > Custom Shortcuts). I could easily map `win-alt-1` to execute a specific command or bash script.
+
+    p While this worked perfectly, it had a major drawback: portability. If I moved the keypad to another computer, I would have to manually recreate all the shortcuts. I wanted a more portable solution—a self-contained set of scripts and configurations that I could easily deploy on any machine with a simple `git clone`.
+
+    p This led me to my final solution: a custom hotkey listener. I decided to write a Python script that would run in the background, listen for my specific key combinations (`win-alt-1`, `win-alt-2`, etc.), and execute commands accordingly.
+
+    p The result is #[a(href="https://github.com/teklynk/hotkey_listener", target="_blank") hotkey_listener], a Python script that uses a simple JSON file to map key combinations to shell commands.
+
+    p The JSON config file is pretty simple. (pynput uses "cmd" instead of "win")
+
+    div.shadow 
+        pre.line-numbers
+            code.language-json.
+                [
+                    {
+                        "keys": ["cmd", "alt", "1"],
+                        "command": "bash /home/user/scripts/myscript1.sh"
+                    },
+                    {
+                        "keys": ["cmd", "alt", "2"],
+                        "command": "bash /home/user/scripts/myscript2.sh"
+                    },
+                    {
+                        "keys": ["cmd", "alt", "3"],
+                        "command": "bash /home/user/scripts/myscript3.sh"
+                    },
+                    {
+                        "keys": ["cmd", "alt", "4"],
+                        "command": "tilix --quake"
+                    },
+                    {
+                        "keys": ["cmd", "alt", "5"],
+                        "command": "xkill"
+                    }
+                ]
+
+    p The JSON File is then included in the hotkey_listener.py script 
+
+    div.shadow 
+        pre.line-numbers
+            code.language-python.
+                import json
+                import subprocess
+                from pynput import keyboard
+
+                # Path to JSON config file. This needs to be the absolute path.
+                HOTKEY_CONFIG = "/home/user/hotkey_listener/hotkey.json"
+
+                # Map string keys to pynput Key or KeyCode
+                SPECIAL_KEYS = {
+                    "alt": keyboard.Key.alt,
+                    "ctrl": keyboard.Key.ctrl,
+                    "shift": keyboard.Key.shift,
+                    "cmd": keyboard.Key.cmd,      # Super/Windows key on Linux/Mac
+                    "super": keyboard.Key.cmd,
+                    "enter": keyboard.Key.enter,
+                    "esc": keyboard.Key.esc,
+                    "space": keyboard.Key.space,
+                    "tab": keyboard.Key.tab,
+                    "backspace": keyboard.Key.backspace,
+                }
+
+                def parse_key(k):
+                    """Converts a key string to a pynput Key or KeyCode"""
+                    k_lower = k.lower()
+                    return SPECIAL_KEYS.get(k_lower, keyboard.KeyCode.from_char(k_lower))
+
+                def load_hotkeys():
+                    """Load hotkey mappings from JSON"""
+                    with open(HOTKEY_CONFIG, "r") as f:
+                        data = json.load(f)
+
+                    hotkey_map = {}
+                    for entry in data:
+                        keys = frozenset(parse_key(k) for k in entry["keys"])
+                        hotkey_map[keys] = entry["command"]
+                    return hotkey_map
+
+                hotkeys = load_hotkeys()
+                pressed_keys = set()
+
+                def on_press(key):
+                    pressed_keys.add(key)
+                    for combo, command in hotkeys.items():
+                        if combo.issubset(pressed_keys):
+                            print(f"Running: {command}")
+                            subprocess.Popen(command, shell=True)
+
+                def on_release(key):
+                    pressed_keys.discard(key)
+
+                print("Hotkey listener running...")
+                with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+                    listener.join()
+
+    p To make this seamless, I needed the script to launch automatically on login. I accomplished this by creating a `.desktop` entry in `~/.config/autostart/hotkey_listener.desktop`. This desktop file simply executes a `run.sh` script, which in turn starts the `hotkey_listener.py`. Now, my custom shortcuts are active as soon as I log in, on any machine where I've set up the project.
+
+    p Here is an example `.desktop` file that I use on Linux Mint:
+
+    div.shadow 
+        pre.line-numbers
+            code.language-bash.
+                [Desktop Entry]
+                Type=Application
+                Exec=/home/user/hotkey_listener/run.sh
+                Hidden=false
+                NoDisplay=false
+                X-GNOME-Autostart-enabled=true
+                Name=Hotkey Listener
+                Comment=Custom keyboard shortcut listener
+
+    h2 My Use Case
+
+    p So, what do I actually *do* with all this? My `hotkey.json` is configured to execute a variety of bash scripts that automate my daily workflow. I have dedicated buttons to instantly mute my microphone, toggle Wi-Fi or Bluetooth, and switch my audio output between headphones and speakers—a lifesaver before a conference call.
+
+    p To keep everything organized and portable, I added a `scripts` folder to the project. This contains all my most-used scripts, making the entire setup self-contained and easy to deploy on any machine. I also printed and glued (water based glue-stick) some labels with icons on to each of the keys. 
+
+    p This little keypad, which once sat collecting dust on a shelf for years, has become one of my most indispensable gadgets. It's a perfect example of how a little open-source software and creativity can breathe new life into forgotten hardware. I can't imagine my desk without it.
