@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Teklynk</title>
+  <link>https://www.teklynk.com</link>
+  <description>Passionate about crafting innovative solutions through web development, programming, and hands-on tinkering</description>
+  <language>en-us</language>
+  <lastBuildDate>Tue, 26 Aug 2025 02:41:37 +0000</lastBuildDate>
+  <atom:link href="https://www.teklynk.com/rss.xml" rel="self" type="application/rss+xml" />
+  
+    <item>
+      <title><![CDATA[Macro Keypad for shortcuts and scripts]]></title>
+      <description><![CDATA[Use a macro keypad to execute scripts, run tasks, turn devices on and off, and more]]></description>
+      <link>https://www.teklynk.com/blog/macro-keypad-for-shortcuts-and-automations</link>
+      <guid isPermaLink="true">https://www.teklynk.com/blog/macro-keypad-for-shortcuts-and-automations</guid>
+      <pubDate>Mon, 25 Aug 2025 04:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[How to maximize Cloudflare security rules]]></title>
+      <description><![CDATA[Get the most out of your 5 free Cloudflare security rules]]></description>
+      <link>https://www.teklynk.com/blog/how-to-maximize-cloudflare-security-rules</link>
+      <guid isPermaLink="true">https://www.teklynk.com/blog/how-to-maximize-cloudflare-security-rules</guid>
+      <pubDate>Sun, 24 Aug 2025 04:00:00 +0000</pubDate>
+    </item>
+</channel>
+</rss>
