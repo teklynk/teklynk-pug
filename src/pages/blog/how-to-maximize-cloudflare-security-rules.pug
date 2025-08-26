@@ -13,16 +13,16 @@ block content
     p With custom security rules, you can protect your website from malicious bots and crawlers, restrict access to specific IP addresses, implement geo-blocking, and much more.
     p I have created five rules that provide a strong security baseline:
     ul 
-        li IP Blocks 
-        li IP Restricted Hostnames 
-        li IP Auth Routes Restricted 
-        li Bots and Crawlers Block 
-        li Geo Restricted Hostnames 
+        li #[a(href="#ip-blocks", target="_self") IP Blocks]
+        li #[a(href="#ip-restricted-hostnames", target="_self") IP Restricted Hostnames]
+        li #[a(href="#ip-auth-routes-restricted", target="_self") IP Auth Routes Restricted]
+        li #[a(href="#bots-and-crawlers-block", target="_self") Bots and Crawlers Block]
+        li #[a(href="#geo-restricted-hostnames", target="_self") Geo Restricted Hostnames]
     p I will go over how each one works and how it can be configured. Once you see these examples, you can then modify and extend these rules further or make them more granular.
 
     img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 21-37-57.png", alt="")
 
-    h2 IP Blocks
+    h2#ip-blocks IP Blocks
     p The IP Blocks rule lets you block specific IP addresses from accessing your domain and subdomains. This is useful if you identify a malicious IP address, perhaps from your Cloudflare web traffic analytics.
     p To create this rule, set the "Rule name" to "IP Blocks".
     p For the condition "When incoming requests match...", set the "Field" to "IP Source Address" and the "Operator" to "is in". You can then manually add IP addresses to the "Value" text area.
@@ -32,7 +32,7 @@ block content
 
     img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 21-55-59.png", alt="")
 
-    h2 IP Restricted Hostnames 
+    h2#ip-restricted-hostnames IP Restricted Hostnames 
     p This rule allows you to restrict entire domains or subdomains to a list of allowed IP addresses. This is ideal for protecting a staging website during development or an admin panel that only a few users should access.
     p Set the "Rule name" to "IP Restricted Hostnames".
     p For the condition "When incoming requests match...", create two expressions joined by "And":
@@ -46,7 +46,7 @@ block content
 
     img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 22-18-14.png", alt="")
 
-    h2 IP Auth Routes Restricted
+    h2#ip-auth-routes-restricted IP Auth Routes Restricted
     p This rule extends the previous concept to restrict specific URL paths, such as `/admin/`, `/login`, or `/wp-admin`, to certain IP addresses.
     p Set the "Rule name" to "IP Auth Routes Restricted".
     p For "When incoming requests match...", you will create three conditions joined by "And":
@@ -68,7 +68,7 @@ block content
 
     img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 22-28-07.png", alt="")
 
-    h2 Bots and Crawlers Block
+    h2#bots-and-crawlers-block Bots and Crawlers Block
     p This rule blocks known search engine crawlers and other bots from accessing specific domains or subdomains. This can be useful for staging sites or private applications that you don't want indexed or scanned.
     p Set the "Rule name" to "Bots and Crawlers Block".
     p The logic for this rule is: `(User Agent matches a crawler OR the request is from a Known Bot) AND the Hostname is one you want to protect`.
@@ -88,7 +88,7 @@ block content
 
     img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 22-38-51.png", alt="")
 
-    h2 Geo Restricted Hostnames
+    h2#geo-restricted-hostnames Geo Restricted Hostnames
     p This rule restricts access to your domains or subdomains based on the visitor's country. It's particularly useful if your service is only intended for specific geographic regions.
     p Set the "Rule name" to "Geo Restricted Hostnames".
     p For "When incoming requests match...", create two conditions joined by "And":
