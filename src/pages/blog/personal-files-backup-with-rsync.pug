@@ -1,0 +1,191 @@
+extends ../../layout/blog-layout.pug
+
+block nav
+
+block title
+    - var date = "2025-08-28"
+    - var title = "Personal File Backups with Rsync"
+    - var description = "My backup stategy for personal files"
+    | Teklynk - #{title}
+
+block content
+    p In my homelab, a simple Ubuntu server acts as my NAS. It hosts a `Backups` directory with dedicated subdirectories for each of my computers. To keep everything synchronized, each computer runs an rsync script every four hours via a cron job. This backup process is efficient and unobtrusive, running in the background and only syncing new or changed files.
+    
+    h2 The Backup Script
+
+    p The backup script is quite simple, relying on a single rsync command. It targets my home directory and uses an `excludes` list to skip any unwanted directories. A critical consideration is to also exclude any mounted directories, as rsync will otherwise traverse into these mounts and attempt to back up their contents as well.
+
+    p The script is designed for easy customization. You'll need to adjust the `sourcedir`, `backupdir`, and `logfile` variables to match your environment. The most critical part to configure is the `exclusions` array. It's essential to add any mounted filesystems to this list to prevent rsync from attempting to back them up. I also recommend excluding large, non-essential directories—such as game libraries or virtual machine images—to ensure the backup process remains swift and efficient.
+
+    div.shadow 
+        pre.line-numbers
+            code.language-bash.
+                #!/bin/bash
+
+                # Set as a cron job: This runs the job every 4 hours at 00:00, 04:00, 08:00, 12:00, 16:00, 20:00
+                # echo "0 */4 * * * username /home/username/scripts/sync.sh > /home/username/scripts/logs/sync.log 2>&1" | sudo tee -a /etc/crontab > /dev/null
+
+                # Variables
+                today_date=$(date +%Y-%m-%d)
+                sourcedir="/home/username/"
+                backupdir="/mnt/nfs/disk4/BACKUPS/HOSTNAME/SYNC"
+                logfile="/home/username/scripts/logs/sync_$today_date.log"
+
+                # Exclusions list
+                exclusions=(
+                ".cache"
+                "cache/"
+                "/cache/"
+                "cache2/"
+                "Cache/"
+                "/Cache/"
+                "CacheStorage/"
+                "/CacheStorage/"
+                "ScriptCache/"
+                "Code Cache/"
+                "CachedData/"
+                "/dev/*"
+                "logs/"
+                "/logs/"
+                "/proc/*"
+                "/sys/*"
+                "/tmp/*"
+                "/run/*"
+                "/var/log/*"
+                "/mnt/*"
+                "/media/*"
+                "swapfile"
+                "Steam"
+                "Games"
+                "GOG Games"
+                "Thumbnails/"
+                "/Thumbnails/"
+                "lost+found"
+                "Downloads"
+                "Videos"
+                "VirtualBox VMs"
+                ".ecryptfs"
+                ".cinnamon"
+                ".local"
+                ".themes"
+                ".linuxmint"
+                ".npm"
+                ".nvm"
+                ".steam"
+                ".var"
+                "retrodeck"
+                "Applications/lazydocker"
+                "*.log"
+                )
+
+                # Function to log messages
+                log() {
+                echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a $logfile
+                }
+
+                # Start backup
+                log "Backup started"
+                notify-send "Backup started"
+
+                # Check if backup directory exists
+                if [ -d "$backupdir" ]; then
+                log "Backup directory exists: $backupdir"
+                
+                # Build rsync command
+                rsync_command="rsync -avzP --delete"
+                for exclude in "${exclusions[@]}"; do
+                    rsync_command+=" --exclude=\"$exclude\""
+                done
+                rsync_command+=" $sourcedir $backupdir"
+                
+                # Execute rsync command
+                log "Executing rsync command"
+                eval $rsync_command 2>&1 | tee -a $logfile
+                
+                if [ ${PIPESTATUS[0]} -eq 0 ]; then
+                    log "Backup completed successfully"
+                    notify-send "Backup completed successfully"
+                else
+                    log "Backup encountered errors"
+                    notify-send "Backup encountered errors"
+                fi
+                else
+                log "Backup directory not found: $backupdir"
+                notify-send "Backup directory not found: $backupdir"
+                exit 1
+                fi
+
+                exit 0                
+
+    h2 Set to Run as a Cron Job
+
+    p I have my backup script set as a cron job to run every four hours. You can set this up by editing the crontab file on your system.
+    p I like to use nano for this task.
+
+    div.shadow 
+        pre.line-numbers
+            code.language-bash.
+                sudo nano /etc/crontab
+
+    p Add this line to you crontab file. Change /home/username... to the path that the script is located in.
+
+    div.shadow 
+        pre.line-numbers
+            code.language-bash.
+                0 */4 * * * /home/username/scripts/sync.sh > /home/username/scripts/logs/sync.log 2>&1
+
+    h2 The Server Archive Script 
+
+    p To create historical snapshots, a second script runs weekly on the NAS server itself. This cron job compresses the entire `SYNC` directory into a date-stamped `tar.gz` archive. The script also handles cleanup, automatically deleting any archives older than 21 days, which ensures I always have three weeks of backups on hand. As with the client script, you'll need to modify the `BACKUP_DIR` and `ARCHIVE_DIR` variables for your setup.
+
+    div.shadow 
+        pre.line-numbers
+            code.language-bash.
+                #!/bin/bash
+
+                # Configuration
+                TODAY_DATE=$(date +%Y-%m-%d)
+                BACKUP_DIR="/mnt/disk4/BACKUPS/THINKPAD-MINT/SYNC"
+                ARCHIVE_DIR="/mnt/disk4/BACKUPS/THINKPAD-MINT/Archives"
+                LOG_FILE="/home/rjones/scripts/logs/thinkpad-mint_sync_archive.log"
+                RETENTION_DAYS=21
+
+                # Ensure log file exists and truncate
+                sudo truncate -s 0 "$LOG_FILE"
+
+                log() {
+                    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | sudo tee -a "$LOG_FILE" > /dev/null
+                }
+
+                log "Backup process started"
+
+                # Check if backup directory exists
+                if [ -d "$BACKUP_DIR" ]; then
+                    log "Directory $BACKUP_DIR exists"
+                    
+                    # Create the archive
+                    ARCHIVE_FILE="$ARCHIVE_DIR/backup-$TODAY_DATE.tar.gz"
+                    if sudo tar -czvf "$ARCHIVE_FILE" "$BACKUP_DIR" &>> "$LOG_FILE"; then
+                        log "Backup completed successfully: $ARCHIVE_FILE"
+                    else
+                        log "Error creating archive $ARCHIVE_FILE"
+                        exit 1
+                    fi
+                else
+                    log "Directory $BACKUP_DIR not found"
+                    exit 1
+                fi
+
+                # Delete old backups
+                log "Deleting backups older than $RETENTION_DAYS days"
+                if find "$ARCHIVE_DIR" -type f -mtime +$RETENTION_DAYS -name '*.tar.gz' -delete &>> "$LOG_FILE"; then
+                    log "Old backups deleted successfully"
+                else
+                    log "Error deleting old backups"
+                    exit 1
+                fi
+
+                log "Backup process completed"
+                exit 0
+
+    p And that's all it takes to implement a robust, automated, and unobtrusive backup strategy for your personal files. This simple `rsync`-based system has proven to be a lifesaver on numerous occasions. Whether I've accidentally deleted a file, a directory, or a critical configuration, recovery is as simple as browsing the NAS and copying the data back. It's a small setup for invaluable peace of mind.
