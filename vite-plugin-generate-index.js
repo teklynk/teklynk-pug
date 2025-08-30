@@ -43,14 +43,31 @@ function generateIndex() {
 .list-group.list-group-flush(id="blog-list")
     `;
 
-    links.forEach(({ date, title, fileName }) => {
+    // Generate content for all posts
+    for (const { date, title, fileName } of links) {
         const formattedDate = dateformat(date);
         pugContent += ` 
     a.list-group-item.list-group-item-action.list-group-item-dark(href="/blog/${fileName}.html")  ${formattedDate} - ${title}
         `;
-    });
+    }
 
-    fs.writeFileSync(resolve(includesPath, 'blog-index.pug'), pugContent);
+    fs.writeFileSync(resolve(includesPath, 'blog-index.pug'), pugContent.trim());
+
+    // Generate content for recent posts (up to 5)
+    let pugContentRecent = `
+ul(id="blog-list-recent")
+    `;
+
+    const recentLinks = links.slice(0, 5);
+    for (const { date, title, fileName } of recentLinks) {
+        const formattedDate = dateformat(date);
+        pugContentRecent += ` 
+    li
+        a(href="/blog/${fileName}.html") ${formattedDate} - ${title}
+        `;
+    }
+
+    fs.writeFileSync(resolve(includesPath, 'blog-recent.pug'), pugContentRecent.trim());
 }
 
 function generateRssFeed() {
