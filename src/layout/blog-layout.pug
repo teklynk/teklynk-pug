@@ -1,5 +1,5 @@
 doctype html
-html(lang=lang)
+html(lang='en-us')
     head
         meta(charset='UTF-8')
         link(rel='icon', href='/assets/icons/favicon.ico')
@@ -24,8 +24,10 @@ html(lang=lang)
             block main_container
             .home
                 .container.pb-3.pt-3
-                    h1 #{title}
-                    h2.small.muted.mb-5 Published on #{moment(date)}
+                    if title
+                        h1 #{title}
+                    if date
+                        h2.small.muted Published on #{moment(date)}
                     block content
                         
         block footer
