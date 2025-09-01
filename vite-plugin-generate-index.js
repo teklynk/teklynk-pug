@@ -75,8 +75,6 @@ function generateRssFeed() {
     const site_url = 'https://www.teklynk.com'; // Change this to your site's URL
     const site_title = 'Teklynk';
     const site_description = 'Passionate about crafting innovative solutions through web development, programming, and hands-on tinkering';
-
-
     const blogPath = resolve(__dirname, 'src/pages/blog');
     const publicPath = resolve(__dirname, 'public'); // Vite copies files from 'public' to the dist root.
 
