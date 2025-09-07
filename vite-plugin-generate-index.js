@@ -58,7 +58,7 @@ function generateIndex() {
 ul(id="blog-list-recent")
     `;
 
-    const recentLinks = links.slice(0, 5);
+    const recentLinks = links.slice(0, 3);
     for (const { date, title, fileName } of recentLinks) {
         const formattedDate = dateformat(date);
         pugContentRecent += ` 

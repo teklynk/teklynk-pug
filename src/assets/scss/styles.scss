@@ -24,6 +24,7 @@ body {
 
 img.img-rounded {
     border-radius: 100%;
+    border: solid .5em $base-color-alt2;
 }
 
 pre[class*=language-] {
