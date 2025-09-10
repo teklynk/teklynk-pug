@@ -17,7 +17,7 @@ block content
 
     p The script is designed for easy customization. You'll need to adjust the `sourcedir`, `backupdir`, and `logfile` variables to match your environment. The most critical part to configure is the `exclusions` array. It's essential to add any mounted filesystems to this list to prevent rsync from attempting to back them up. I also recommend excluding large, non-essential directories—such as game libraries or virtual machine images—to ensure the backup process remains swift and efficient.
 
-    div.shadow 
+    div.shadow-sm 
         pre.line-numbers
             code.language-bash.
                 #!/bin/bash
@@ -122,14 +122,14 @@ block content
     p I have my backup script set as a cron job to run every four hours. You can set this up by editing the crontab file on your system.
     p I like to use nano for this task.
 
-    div.shadow 
+    div.shadow-sm 
         pre.line-numbers
             code.language-bash.
                 sudo nano /etc/crontab
 
     p Add this line to you crontab file. Change /home/username... to the path that the script is located in.
 
-    div.shadow 
+    div.shadow-sm 
         pre.line-numbers
             code.language-bash.
                 0 */4 * * * /home/username/scripts/sync.sh > /home/username/scripts/logs/sync.log 2>&1
@@ -138,7 +138,7 @@ block content
 
     p To create historical snapshots, a second script runs weekly on the NAS server itself. This cron job compresses the entire `SYNC` directory into a date-stamped `tar.gz` archive. The script also handles cleanup, automatically deleting any archives older than 21 days, which ensures I always have three weeks of backups on hand. As with the client script, you'll need to modify the `BACKUP_DIR` and `ARCHIVE_DIR` variables for your setup.
 
-    div.shadow 
+    div.shadow-sm 
         pre.line-numbers
             code.language-bash.
                 #!/bin/bash

@@ -20,7 +20,7 @@ block content
         li #[a(href="#geo-restricted-hostnames", target="_self") Geo Restricted Hostnames]
     p I will go over how each one works and how it can be configured. Once you see these examples, you can then modify and extend these rules further or make them more granular.
 
-    img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 21-37-57.png", alt="")
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/Screenshot from 2025-08-24 21-37-57.png", alt="")
 
     h2#ip-blocks IP Blocks
     p The IP Blocks rule lets you block specific IP addresses from accessing your domain and subdomains. This is useful if you identify a malicious IP address, perhaps from your Cloudflare web traffic analytics.
@@ -30,7 +30,7 @@ block content
     p The "Place at" option should be set to "First". Security rules execute in the order you set them, and we want to check for blocked IPs immediately.
     p Finally, save the rule.
 
-    img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 21-55-59.png", alt="")
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/Screenshot from 2025-08-24 21-55-59.png", alt="")
 
     h2#ip-restricted-hostnames IP Restricted Hostnames 
     p This rule allows you to restrict entire domains or subdomains to a list of allowed IP addresses. This is ideal for protecting a staging website during development or an admin panel that only a few users should access.
@@ -44,7 +44,7 @@ block content
     p "Place at" can be set to "Custom" to position it correctly in your rule list.
     p Save the rule.
 
-    img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 22-18-14.png", alt="")
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/Screenshot from 2025-08-24 22-18-14.png", alt="")
 
     h2#ip-auth-routes-restricted IP Auth Routes Restricted
     p This rule extends the previous concept to restrict specific URL paths, such as `/admin/`, `/login`, or `/wp-admin`, to certain IP addresses.
@@ -75,7 +75,7 @@ block content
     p To build this, you'll need to use the expression editor to group the "Or" conditions.
     ol
         li In the first part of the group, set "Field" to "User Agent" and "Operator" to "equals". The "Value" should be this regular expression: 
-            div.shadow 
+            div.shadow-sm 
                 pre
                     code.language-bash.
                         ^(googlebot|bingbot|yandexbot|baidubot|duckduckgo|pinterest|twitterbot|facebookbot)i
@@ -86,7 +86,7 @@ block content
     p "Place at" should be set as "Custom".
     p Save the rule.
 
-    img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 22-38-51.png", alt="")
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/Screenshot from 2025-08-24 22-38-51.png", alt="")
 
     h2#geo-restricted-hostnames Geo Restricted Hostnames
     p This rule restricts access to your domains or subdomains based on the visitor's country. It's particularly useful if your service is only intended for specific geographic regions.
@@ -100,7 +100,7 @@ block content
     p "Place at" should be set as "Custom".
     p Save the rule.
 
-    img.img-fluid.mb-4.shadow(src="/assets/images/Screenshot from 2025-08-24 22-47-28.png", alt="")
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/Screenshot from 2025-08-24 22-47-28.png", alt="")
 
     p With these five security rules as a foundation, you have a flexible and powerful setup for protecting your websites. Feel free to modify these examples and tailor them to your specific needs.
 

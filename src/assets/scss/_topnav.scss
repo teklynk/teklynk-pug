@@ -32,10 +32,6 @@ img.navbar-logo {
 }
 
 .nav {
-    &-shadow {
-        box-shadow: 0 1px 10px #000;
-        transition: all 0.2s ease-in-out;
-    }
     &-button {
         background-color: $base-color2;
         color: $base-color-alt2;

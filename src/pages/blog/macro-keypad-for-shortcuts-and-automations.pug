@@ -9,7 +9,7 @@ block title
     | Teklynk - #{title}
 
 block content
-    img.img-fluid.mb-4.shadow(src="/assets/images/keyboard_macropad.jpg", alt="A 12-button, 2-knob macro keypad on a desk.")
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/keyboard_macropad.jpg", alt="A 12-button, 2-knob macro keypad on a desk.")
 
     ul 
         li Check out the project on GitHub: #[a(href="https://github.com/teklynk/hotkey_listener", target="_blank") hotkey_listener]
@@ -21,7 +21,7 @@ block content
 
     p I created the following `config.yml` to define my desired layout.
 
-    div.shadow 
+    div.shadow-sm 
         pre.line-numbers
             code.language-yaml.
                 orientation: normal
@@ -55,7 +55,7 @@ block content
 
     p The JSON config file is pretty simple. (pynput uses "cmd" instead of "win")
 
-    div.shadow 
+    div.shadow-sm 
         pre.line-numbers
             code.language-json.
                 [
@@ -83,7 +83,7 @@ block content
 
     p The JSON File is then included in the hotkey_listener.py script 
 
-    div.shadow 
+    div.shadow-sm 
         pre.line-numbers
             code.language-python.
                 import json
@@ -144,7 +144,7 @@ block content
 
     p Here is an example `.desktop` file that I use on Linux Mint:
 
-    div.shadow 
+    div.shadow-sm 
         pre.line-numbers
             code.language-bash.
                 [Desktop Entry]
