@@ -67,6 +67,11 @@ ul(id="blog-list-recent")
         `;
     }
 
+    pugContentRecent += ` 
+    li
+        a(href="/blog/") All blog posts
+        `;
+
     fs.writeFileSync(resolve(includesPath, 'blog-recent.pug'), pugContentRecent.trim());
 }
 
