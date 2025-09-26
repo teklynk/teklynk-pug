@@ -5,9 +5,16 @@
   <link>https://www.teklynk.com</link>
   <description>Passionate about crafting innovative solutions through web development, programming, and hands-on tinkering</description>
   <language>en-us</language>
-  <lastBuildDate>Wed, 17 Sep 2025 07:52:44 +0000</lastBuildDate>
+  <lastBuildDate>Fri, 26 Sep 2025 02:45:18 +0000</lastBuildDate>
   <atom:link href="https://www.teklynk.com/rss.xml" rel="self" type="application/rss+xml" />
   
+    <item>
+      <title><![CDATA[Continuous Deployment Made Simple: Node.js + GitHub Webhooks for Automatic Site Updates]]></title>
+      <description><![CDATA[Automate your website deployments]]></description>
+      <link>https://www.teklynk.com/blog/continuous-deployment-made-simple-nodejs-and-github-webhooks</link>
+      <guid isPermaLink="true">https://www.teklynk.com/blog/continuous-deployment-made-simple-nodejs-and-github-webhooks</guid>
+      <pubDate>Thu, 25 Sep 2025 04:00:00 +0000</pubDate>
+    </item>
     <item>
       <title><![CDATA[Raspi-Streamer: A Raspberry Pi streaming device]]></title>
       <description><![CDATA[Stream to Twitch, YouTube, Owncast or any RTMP server using a USB capture card and a Raspberry Pi.]]></description>
