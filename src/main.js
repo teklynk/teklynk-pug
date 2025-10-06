@@ -11,12 +11,40 @@ window.moment = moment;
 
 window.main = true;
 
-window.addEventListener('scroll', function () {
-    let topNav = document.querySelectorAll("#topNav");
-    //Define height of Navbar or scroll threshold
-    if (window.scrollY >= 40) {
-        topNav[0].classList.add("shadow");
-    } else {
-        topNav[0].classList.remove("shadow");
+const topNav = document.querySelector("#topNav");
+const navMain = document.querySelector('#nav-main');
+const scrollTopButton = document.querySelector('.scrollTop');
+const body = document.body;
+
+// Use a single scroll event listener for all scroll-related events
+window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+
+    if (topNav) {
+        topNav.classList.toggle("shadow", scrollY >= 40);
+    }
+
+    const isScrolledPastNav = scrollY > 60;
+
+    if (scrollTopButton) {
+        scrollTopButton.classList.toggle('hide', !isScrolledPastNav);
+    }
+
+    if (body) {
+        body.classList.toggle('pt-5', isScrolledPastNav);
+        body.classList.toggle('pt-0', !isScrolledPastNav);
+    }
+
+    if (navMain) {
+        navMain.classList.toggle('fixed-top', isScrolledPastNav);
+        navMain.classList.toggle('shadow', isScrolledPastNav);
+        navMain.classList.toggle('static-top', !isScrolledPastNav);
     }
 });
+
+if (scrollTopButton) {
+    scrollTopButton.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default anchor behavior
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
