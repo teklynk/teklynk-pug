@@ -108,3 +108,8 @@ img.discord-logo {
     color: $base-color-alt2;
     background-color: $base-color1;
 }
+
+h1.underline, h2.underline {
+    border-bottom: solid 1px #343a40;
+    padding-bottom: 12px;
+}
