@@ -10,8 +10,6 @@ body {
     font-size: $base-font-size;
 }
 
-
-
 .hide {
     display: none;
 }
@@ -34,7 +32,7 @@ img.img-rounded {
 }
 
 .logo img.img-rounded {
-    border: solid .5em $base-color-alt2;
+    border: solid .3em $base-color2;
 }
 
 pre[class*=language-] {
