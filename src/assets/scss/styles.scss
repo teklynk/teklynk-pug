@@ -10,6 +10,8 @@ body {
     font-size: $base-font-size;
 }
 
+
+
 .hide {
     display: none;
 }
@@ -24,6 +26,11 @@ body {
 
 img.img-rounded {
     border-radius: 100%;
+}
+
+.logo {
+    background: url("/assets/images/keyboard_bg.jpeg") top center no-repeat;
+    background-size: cover;
 }
 
 .logo img.img-rounded {
