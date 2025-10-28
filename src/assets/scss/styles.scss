@@ -127,3 +127,7 @@ h1.underline, h2.underline {
     text-indent: -999px;
     background: url("/assets/images/ui.totop.png") no-repeat left top;
 }
+
+pre[class*=language-] {
+    background: $base-color-alt5 !important;
+}
