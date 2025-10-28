@@ -42,6 +42,30 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// Blog search
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    const input = document.getElementById('searchInput');
+    const filter = input.value.toLowerCase();
+    const list = document.getElementById('blog-list');
+    const items = list.getElementsByTagName('li');
+
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        // 3 character limit
+        if (filter.length < 3) {
+            item.style.display = "";
+            continue;
+        }
+
+        const txtValue = item.textContent || item.innerText;
+        if (txtValue.toLowerCase().includes(filter)) {
+            item.style.display = "";
+        } else {
+            item.style.display = "none";
+        }
+    }
+});
+
 if (scrollTopButton) {
     scrollTopButton.addEventListener('click', (e) => {
         e.preventDefault(); // Prevent default anchor behavior

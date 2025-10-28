@@ -40,14 +40,15 @@ function generateIndex() {
     links.sort((a, b) => moment(b.date).diff(moment(a.date)));
 
     let pugContent = `
-.list-group.list-group-flush(id="blog-list")
+ul(id="blog-list")
     `;
 
     // Generate content for all posts
     for (const { date, title, fileName } of links) {
         const formattedDate = dateformat(date);
         pugContent += ` 
-    a.list-group-item.list-group-item-action.list-group-item-dark(href="/blog/${fileName}.html")  ${formattedDate} - ${title}
+    li
+        a(href="/blog/${fileName}.html") ${formattedDate} - ${title}
         `;
     }
 
