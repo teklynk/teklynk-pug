@@ -21,6 +21,7 @@ nav {
             &:hover, &:focus, &:active, &.active {
                 background-color: transparent;
                 text-decoration: underline;
+                color: $base-color-alt4;
             }
         }  
     }

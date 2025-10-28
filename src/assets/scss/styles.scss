@@ -42,12 +42,12 @@ main {
     p, a, li {
         font-size: inherit;
     }
-    a {
-        text-decoration: underline;
-        color: $base-color-alt3;
-        &:hover, &:focus, &:active {
-            text-decoration: underline;
-            color: $base-color-alt3;
+    a, a.list-group-item, a.list-group-item-action {
+        text-decoration: underline !important;
+        color: $base-color-alt3 !important;
+        &:hover, &:focus {
+            text-decoration: underline !important;
+            color: $base-color-alt1 !important;
         }
     }
     h1, h2, h3 {
