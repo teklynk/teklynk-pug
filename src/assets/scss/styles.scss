@@ -43,7 +43,7 @@ main {
         font-size: inherit;
     }
     a, a.list-group-item, a.list-group-item-action {
-        text-decoration: underline !important;
+        text-decoration: none !important;
         color: $base-color-alt3 !important;
         &:hover, &:focus {
             text-decoration: underline !important;
