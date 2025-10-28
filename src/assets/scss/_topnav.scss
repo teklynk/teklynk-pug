@@ -1,5 +1,9 @@
 #topNav {
-    background-color: $base-color1;
+    background-color: $base-color2;
+}
+
+nav.bg-dark {
+    background-color: $base-color2 !important;
 }
 
 nav {
