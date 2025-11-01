@@ -1,0 +1,92 @@
+extends ../../layout/blog-layout.pug
+
+block nav
+
+block title
+    - var date = "2025-10-31"
+    - var title = "Expose Your Home Server Securely with Cloudflare Tunnels"
+    - var description = "Host apps like Plex from home without opening ports, managing reverse proxies, or handling SSL certificates. Here's how to do it for free with Cloudflare Tunnels."
+    | Teklynk - #{title}
+
+block content
+    p Self-hosting applications like Plex, Nextcloud, or personal web projects from home is incredibly rewarding. It gives you full control over your data and services. However, exposing these services to the internet has traditionally been a complex and risky endeavor. You'd have to deal with dynamic IP addresses, configure complicated port forwarding rules on your router, and wrestle with setting up and renewing SSL certificates. Each open port on your router is another potential door for unwanted visitors.
+
+    p What if you could get all the benefits of self-hosting without any of those headaches? No open ports, no reverse proxy to manage, and no SSL certificates to renew—just a secure, encrypted, and free connection between your home server and the outside world. This is exactly what Cloudflare Tunnels provide, and they have completely changed how I host my services from home.
+
+    h2 What are Cloudflare Tunnels?
+
+    p A Cloudflare Tunnel creates a secure, outbound-only connection between your server and the Cloudflare network. A lightweight daemon called `cloudflared` runs on your server, establishing this link. Once connected, Cloudflare can route traffic from a public hostname (like `plex.yourdomain.com`) through the tunnel to a local service (like `localhost:32400`), without you ever needing to open an incoming port on your router.
+
+    p This means your server's IP address remains private, and your network stays locked down, dramatically improving your security posture.
+
+    h3 Key Benefits of Cloudflare Tunnels
+    ul
+        li
+            strong No Open Ports & Hidden IP:&nbsp;
+            | Your server's IP address remains private and your network stays locked down. Since the connection is outbound-only, you don't need to open any ports on your router, drastically improving security.
+        li
+            strong No Reverse Proxy Needed:&nbsp;
+            | The `cloudflared` service handles all the routing, eliminating the need to configure and maintain a separate reverse proxy like Nginx or Caddy.
+        li
+            strong Automatic SSL Certificates:&nbsp;
+            | Cloudflare automatically provisions and renews SSL/TLS certificates for your public hostnames, giving you secure HTTPS without any hassle.
+        li
+            strong Unified Security:&nbsp;
+            | Easily apply Cloudflare's powerful features like firewall rules, rate limiting, and Zero Trust access policies to your self-hosted applications.
+
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/Cloudflare-Tunnels-Screenshot from 2025-10-31 21-23-58.png", alt="Diagram showing how cloudflare tunnels work. From client to cloudflare dns to cloudflare tunnel to your web server.")
+
+    h2 Setting It Up with the Zero Trust Dashboard
+
+    p While you can set up tunnels entirely from the command line, the Cloudflare Zero Trust dashboard provides a user-friendly web UI that simplifies the process. Let's walk through setting up a tunnel to expose a Plex server and another web application using the dashboard.
+
+    h3 Prerequisites
+    ul
+        li A Cloudflare account (the free tier is sufficient).
+        li A domain name added to your Cloudflare account.
+
+    h3 Step 1: Create a Tunnel
+    ol
+        li Navigate to the <a href="https://one.dash.cloudflare.com" target="_blank">Zero Trust Dashboard</a>.
+        li In the sidebar, go to <strong>Access > Tunnels</strong>.
+        li Click the <strong>Create a tunnel</strong> button.
+        li Give your tunnel a name (e.g., `my-home-lab`) and click <strong>Save tunnel</strong>.
+
+    h3 Step 2: Install the Connector
+    p On the next screen, you'll be prompted to install the `cloudflared` connector. Cloudflare provides a single command tailored to your OS that installs the connector, authenticates it, and runs it as a service.
+
+    p For example, on a 64-bit Debian system, the command will look something like this:
+
+    div.shadow-sm.mb-4
+        pre.line-numbers
+            code.language-bash.
+                # Add cloudflare gpg key
+                sudo mkdir -p --mode=0755 /usr/share/keyrings
+                curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
+
+                # Add this repo to your apt repositories
+                echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared any main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
+
+                # Install cloudflared
+                sudo apt-get update && sudo apt-get install cloudflared
+
+    p Copy and run the command provided in the dashboard on your server. Once it's running, you'll see the connector appear in the dashboard, and you can proceed to the next step.
+
+    p This single command handles everything: it downloads the connector, installs it as a system service, and ensures it starts automatically on boot.
+
+    h3 Step 3: Configure Public Hostnames
+    p This is where you tell Cloudflare how to route traffic through your new tunnel.
+    ol
+        li In the <strong>Public Hostnames</strong> section, click <strong>Add a public hostname</strong>.
+        li For the first service, let's set up Plex.
+            ul
+                li <strong>Subdomain:</strong> `plex`
+                li <strong>Domain:</strong> `yourdomain.com`
+                li <strong>Service Type:</strong> `HTTP`
+                li <strong>URL:</strong> `localhost:32400`
+        li Click <strong>Save hostname</strong>.
+
+    p Cloudflare automatically creates the necessary DNS records for you. Within a minute, your services should be accessible at `plex.yourdomain.com`.
+
+    h2 Conclusion
+    p Cloudflare Tunnels are a powerful, secure, and surprisingly simple way to expose your home-hosted services. By eliminating the need for port forwarding, dynamic DNS, and manual SSL certificate management, they remove some of the biggest hurdles to self-hosting. Whether you're running a media server like Plex or developing your own web applications, tunnels provide a robust and free solution to connect your projects to the world.
