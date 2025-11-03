@@ -1,0 +1,74 @@
+extends ../../layout/blog-layout.pug
+
+block nav
+
+block title
+    - var date = "2025-11-02"
+    - var title = "How to Host a Game Server From Your Home using PlayIt.gg"
+    - var description = "Simple and secure way to host game servers from your home network using PlayIt.gg tunnels"
+    | Teklynk - #{title}
+
+block content
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/playit-Screenshot from 2025-11-02 22-55-01.png", alt="PlayIt: Diagram showing how playit works")
+
+    p Have you ever wanted to host a game server from home, only to be stopped by the technical and security hurdles? The process often involves opening ports on your router, exposing your home IP address, and dealing with dynamic IPs that can change without warning.
+    p In a previous post, I explored using  #[a(href="/blog/expose-your-home-server-securely-with-cloudflare-tunnels", target="_self") Cloudflare Tunnels] to host web services securely. While they are excellent for web traffic, they have a key limitation: they primarily support TCP-based protocols.
+    p Many game servers, however, rely on the UDP protocol, which makes Cloudflare Tunnels an unsuitable choice for gaming. This is where PlayIt.gg comes in. A service that has completely changed how I host game servers.
+
+    h2 What is PlayIt.gg?
+    p #[a(href="https://playit.gg", target="_blank") PlayIt.gg] is a service designed to simplify hosting game servers from a home network. It works by creating a secure, outbound tunnel from your computer to the PlayIt.gg network, much like Cloudflare Tunnels. However, it is built from the ground up to support the protocols required for gaming, including both UDP and TCP traffic. When you run the PlayIt.gg client, it establishes a persistent connection to their servers. This gives you a public, static IP address and a memorable `.playit.gg` domain that you can share with your friends, all without ever exposing your home IP address or opening a single port on your router.
+    p PlayIt.gg offers a generous free tier that includes up to three tunnels. If you need more, an upgrade is only $30 per year. Most game servers, like Minecraft, only require one or two ports, making the free plan a great starting point.
+
+    h2 Getting started 
+    ol
+        li Create a free account on #[a(href="https://playit.gg", target="_blank") PlayIt.gg].
+        li Similar to Cloudflare Tunnels, you need to install the PlayIt.gg client on the computer/server hosting the game server. Head over to the #[a(href="https://playit.gg/download/", target="_blank") download page] to get the client for your operating system.
+        li For this tutorial, I'll use the Linux client. After following the installation steps, run `playit` from your terminal. This will generate a unique URL that is printed inside the terminal.
+        li Visit the URL in your browser. You'll be prompted to link the new agent to your account. Once you accept, you can give your agent a memorable name, like `home-game-server`.
+        li Back on the PlayIt.gg dashboard, click #[strong Create Tunnel]. Choose your desired region and protocol type (e.g., TCP, UDP, or both).
+        li Select the number of ports and enter the local port your game server is running on. For example, the default port for Minecraft: Java Edition is `25565`.
+        li After creating the tunnel, PlayIt.gg will assign you a static IP and a unique domain (e.g., `your-game.at.ply.gg:7261`) that you can safely share with your friends.
+
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/playit-Screenshot from 2025-11-02 21-55-26.png", alt="PlayIt: Set up server region, protocol and port number")
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/playit-Screenshot from 2025-11-02 21-56-24.png", alt="PlayIt: Showing Playit agent and client connection to PlayIt servers")
+
+    h3 Running as a Service
+    p The PlayIt client doesn't start automatically on boot, so you'll need to create a system service to manage it. Here is an example `systemd` service file for Linux.
+    p First, create the service file:
+    div.shadow-sm.mb-4
+        pre.line-numbers
+            code.language-bash.
+                sudo nano /etc/systemd/system/playit.service
+    
+    p Next, add the following content, making sure to replace `user` with your actual username:
+    div.shadow-sm.mb-4
+        pre.line-numbers
+            code.language-bash.
+                [Unit]
+                Description=Playit.gg Tunnel Service
+                After=network.target
+
+                [Service]
+                User=user
+                Group=user
+                ExecStart=/usr/local/bin/playit
+                Restart=always
+                RestartSec=5
+                WorkingDirectory=/home/user
+
+                [Install]
+                WantedBy=multi-user.target
+
+    p Finally, reload the systemd daemon, enable the service to start on boot, and start it now:
+    div.shadow-sm.mb-4
+        pre.line-numbers
+            code.language-bash.
+                sudo systemctl daemon-reload
+                sudo systemctl enable playit.service
+                sudo systemctl start playit.service
+
+    p And that's it! With the client configured to run as a service, your game server is now securely and reliably accessible to the world.
+    p To give a real-world example, I use this exact setup on my home server with #[a(href="https://linuxgsm.com/", target="_blank") LinuxGSM] (Linux Game Server Manager) to host servers for Unreal Tournament, Xonotic, Alien Arena, and Minecraft. Each game runs through its own tunnel, complete with a unique, shareable URL and static IP.
+
+    h2 Conclusion 
+    p In conclusion, PlayIt.gg effectively solves the long-standing challenges of hosting game servers from home. By creating a secure tunnel that supports both UDP and TCP, it eliminates the need for risky port forwarding and shields your home IP address from the public internet. The setup is straightforward, and with a generous free tier, there's little reason not to give it a try. Whether you're hosting a private Minecraft world for friends or running multiple dedicated servers with tools like LinuxGSM, PlayIt.gg provides a simple, secure, and reliable solution. Happy gaming!

@@ -47,10 +47,10 @@ block content
 
     h3 Step 1: Create a Tunnel
     ol
-        li Navigate to the <a href="https://one.dash.cloudflare.com" target="_blank">Zero Trust Dashboard</a>.
-        li In the sidebar, go to <strong>Access > Tunnels</strong>.
-        li Click the <strong>Create a tunnel</strong> button.
-        li Give your tunnel a name (e.g., `my-home-lab`) and click <strong>Save tunnel</strong>.
+        li Navigate to the #[a(href="https://one.dash.cloudflare.com", target="_blank") Zero Trust Dashboard].
+        li In the sidebar, go to #[strong Access > Tunnels].
+        li Click the #[strong Create a tunnel] button.
+        li Give your tunnel a name (e.g., `my-home-lab`) and click #[strong Save tunnel].
 
     h3 Step 2: Install the Connector
     p On the next screen, you'll be prompted to install the `cloudflared` connector. Cloudflare provides a single command tailored to your OS that installs the connector, authenticates it, and runs it as a service.
@@ -77,14 +77,14 @@ block content
     h3 Step 3: Configure Public Hostnames
     p This is where you tell Cloudflare how to route traffic through your new tunnel.
     ol
-        li In the <strong>Public Hostnames</strong> section, click <strong>Add a public hostname</strong>.
+        li In the #[strong Public Hostnames] section, click #[strong Add a public hostname].
         li For the first service, let's set up Plex.
             ul
-                li <strong>Subdomain:</strong> `plex`
-                li <strong>Domain:</strong> `yourdomain.com`
-                li <strong>Service Type:</strong> `HTTP`
-                li <strong>URL:</strong> `localhost:32400`
-        li Click <strong>Save hostname</strong>.
+                li #[strong Subdomain:] `plex`
+                li #[strong Domain:] `yourdomain.com`
+                li #[strong Service Type:] `HTTP`
+                li #[strong URL:] `localhost:32400`
+        li Click #[strong Save hostname].
 
     p Cloudflare automatically creates the necessary DNS records for you. Within a minute, your services should be accessible at `plex.yourdomain.com`.
 
