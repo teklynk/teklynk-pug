@@ -29,7 +29,9 @@ html(lang='en-us')
                     if date
                         h2.underline.small.muted Published on #{moment(date)}
                     block content
-                        
+
+                    h2.underline 🖋️ Recent Blogs
+                    include ../includes/blog-recent.pug 
         block footer
             include ../includes/footer.pug
         block script
