@@ -7,13 +7,13 @@ html(lang='en-us')
         title
             block title
                 | Teklynk
-        meta(name='description', content=description)
-        link(rel="canonical", href="https://www.teklynk.com")
+        meta(name='description', content=description ? description : "Web Developer | Full Stack Developer | Linux user | Crafting innovative solutions through web development and hands-on tinkering.")
+        link(rel="canonical", href=pageUrl ? pageUrl : "https://www.teklynk.com")
         meta(property="og:locale" content="en_US")
         meta(property="og:type", content="website")
-        meta(property="og:title" content=title)
-        meta(property="og:url", content="https://www.teklynk.com")
-        meta(property="og:description", content=description)
+        meta(property="og:title" content=title ? title : "Teklynk.com")
+        meta(property="og:url", content=pageUrl ? pageUrl : "https://www.teklynk.com")
+        meta(property="og:description", content=description ? description : "Web Developer | Full Stack Developer | Linux user | Crafting innovative solutions through web development and hands-on tinkering.")
         meta(property="og:image", content=thumbnail ? thumbnail : "https://www.teklynk.com/assets/images/profile_crop_400x400.jpg")
     body
         block nav
@@ -30,8 +30,10 @@ html(lang='en-us')
                         h2.underline.small.muted Published on #{moment(date)}
                     block content
 
-                    h2.underline 🖋️ Recent Blogs
-                    include ../includes/blog-recent.pug 
+                    block recent_blogs
+                        div#blog-recent-container
+                            h2.underline 🖋️ Recent Blogs
+                            include ../includes/blog-recent.pug 
         block footer
             include ../includes/footer.pug
         block script
