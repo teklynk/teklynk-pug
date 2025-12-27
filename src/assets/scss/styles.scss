@@ -36,6 +36,20 @@ iframe.letterbird-embed {
     box-shadow: var(--bs-box-shadow) !important;
 }
 
+.form-control {
+    border-color: $base-color2 !important;
+    background-color: #1b1f23 !important;
+    color: $base-color-alt2 !important;
+}
+
+.form-control::placeholder {
+    color: $base-color-alt2-muted !important;
+}
+
+.form-control:focus {
+    border-color: $base-color-alt3 !important;
+}
+
 main {
     a, p, li, h1, h2, h3 {
         font-family: $base-font1;
