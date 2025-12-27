@@ -6,6 +6,7 @@ block title
     - var date = "2025-10-31"
     - var title = "Expose Your Home Server Securely with Cloudflare Tunnels"
     - var description = "Host apps like Plex from home without opening ports, managing reverse proxies, or handling SSL certificates. Here's how to do it for free with Cloudflare Tunnels."
+    - var thumbnail = "https://www.teklynk.com/assets/images/Cloudflare-Tunnels-Screenshot%20from%202025-10-31%2021-23-58.png"
     | Teklynk - #{title}
 
 block content
@@ -22,7 +23,7 @@ block content
     h3 Key Benefits of Cloudflare Tunnels
     ul
         li
-            strong No Open Ports & Hidden IP:&nbsp;
+            strong No Open Ports &amp; Hidden IP:&nbsp;
             | Your server's IP address remains private and your network stays locked down. Since the connection is outbound-only, you don't need to open any ports on your router, drastically improving security.
         li
             strong No Reverse Proxy Needed:&nbsp;
@@ -68,7 +69,7 @@ block content
                 echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared any main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
 
                 # Install cloudflared
-                sudo apt-get update && sudo apt-get install cloudflared
+                sudo apt-get update &amp;&amp; sudo apt-get install cloudflared
 
     p Copy and run the command provided in the dashboard on your server. Once it's running, you'll see the connector appear in the dashboard, and you can proceed to the next step.
 
