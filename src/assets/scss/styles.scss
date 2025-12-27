@@ -33,7 +33,7 @@ iframe.letterbird-embed {
     min-height: unset !important;
     max-width: unset !important;
     min-width: unset !important;
-    box-shadow: none !important;
+    box-shadow: var(--bs-box-shadow) !important;
 }
 
 main {
