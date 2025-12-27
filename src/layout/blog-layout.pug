@@ -14,7 +14,7 @@ html(lang='en-us')
         meta(property="og:title" content=title)
         meta(property="og:url", content="https://www.teklynk.com")
         meta(property="og:description", content=description)
-        meta(property="og:image", content="https://www.teklynk.com/assets/images/teklynk-profile.jpg")
+        meta(property="og:image", content=thumbnail ? thumbnail : "https://www.teklynk.com/assets/images/teklynk-profile.jpg")
     body
         block nav
             - var page = "blogs"
