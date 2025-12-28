@@ -55,7 +55,7 @@ main {
         font-family: $base-font1;
     }
     p, a, li {
-        font-size: inherit;
+        font-size: $base-font-size;
     }
     a, a.list-group-item, a.list-group-item-action {
         text-decoration: none !important;
