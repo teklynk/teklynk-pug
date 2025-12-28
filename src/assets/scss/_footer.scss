@@ -3,6 +3,9 @@ footer {
     color: $base-color-alt2;
     padding-top: 12px;
     padding-bottom: 12px;
+    p.small small {
+        color: $base-color-alt3-muted;
+    }
     .social-media-icons {
         a {
             color: $base-color-alt2;

@@ -38,12 +38,12 @@ iframe.letterbird-embed {
 
 .form-control {
     border-color: $base-color3 !important;
-    background-color: #1b1f23 !important;
+    background-color: $base-panel-bg !important;
     color: $base-color-alt2 !important;
 }
 
 .form-control::placeholder {
-    color: $base-color-alt2-muted !important;
+    color: $base-color-alt3-muted !important;
 }
 
 .form-control:focus {
@@ -109,7 +109,7 @@ h1.underline, h2.underline {
 }
 
 pre[class*=language-] {
-    background: $base-color-alt5 !important;
+    background: $base-panel-bg !important;
     font-size: $base-font-size;
     font-family: $base-font1;
 }
