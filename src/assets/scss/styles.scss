@@ -59,7 +59,8 @@ main {
             color: $base-color-alt1 !important;
         }
     }
-    h1, h2, h3 {
+    h1, h2, h3, h4 {
+        font-weight: 600;
         margin-bottom: 1.5rem;
         margin-top: 1.5rem;
     }
