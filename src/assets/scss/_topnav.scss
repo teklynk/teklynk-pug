@@ -8,9 +8,7 @@ nav.bg-dark {
 
 nav {
     .navbar-nav {
-        font-family: $base-font1;
         a.nav-link {
-            font-family: $base-font1;
             color: $base-color-alt2;
             &:hover, &:focus, &.active, &.show {
                 color: $base-color-alt4;

@@ -51,12 +51,6 @@ iframe.letterbird-embed {
 }
 
 main {
-    a, p, li, h1, h2, h3 {
-        font-family: $base-font1;
-    }
-    p, a, li {
-        font-size: $base-font-size;
-    }
     a, a.list-group-item, a.list-group-item-action {
         text-decoration: none !important;
         color: $base-color-alt3 !important;
@@ -115,4 +109,6 @@ h1.underline, h2.underline {
 
 pre[class*=language-] {
     background: $base-color-alt5 !important;
+    font-size: $base-font-size;
+    font-family: $base-font1;
 }
