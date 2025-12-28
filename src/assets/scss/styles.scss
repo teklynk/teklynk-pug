@@ -33,11 +33,11 @@ iframe.letterbird-embed {
     min-height: unset !important;
     max-width: unset !important;
     min-width: unset !important;
-    box-shadow: var(--bs-box-shadow) !important;
+    box-shadow: var(--bs-box-shadow-sm) !important;
 }
 
 .form-control {
-    border-color: $base-color2 !important;
+    border-color: $base-color3 !important;
     background-color: #1b1f23 !important;
     color: $base-color-alt2 !important;
 }
@@ -60,7 +60,7 @@ main {
         }
     }
     h1, h2, h3, h4 {
-        font-weight: 600;
+        font-weight: $base-font-weight;
         margin-bottom: 1.5rem;
         margin-top: 1.5rem;
     }
@@ -91,7 +91,7 @@ main {
 }
 
 h1.underline, h2.underline {
-    border-bottom: solid 1px #343a40;
+    border-bottom: solid 1px $base-color3;
     padding-bottom: 12px;
 }
 
