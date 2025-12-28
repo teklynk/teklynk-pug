@@ -34,14 +34,14 @@ block content
     h3 1. Install Dependencies
     p First, install the required packages, including FFMPEG, NGINX, and the RTMP module:
     div.shadow-sm 
-        pre
+        pre.line-numbers
             code.language-bash.
                 sudo apt install ffmpeg nginx libnginx-mod-rtmp rpicam-apps
     
     h3 2. Configure NGINX
     p We need to replace the default NGINX configuration to enable RTMP streaming. Edit `/etc/nginx/nginx.conf` and add the following:
     div.shadow-sm 
-        pre
+        pre.line-numbers
             code.language-bash.
                 load_module modules/ngx_rtmp_module.so;
                 worker_processes auto;
@@ -68,14 +68,14 @@ block content
                 } 
     p Save the file and restart the NGINX service:
     div.shadow-sm
-        pre
+        pre.line-numbers
             code.language-bash.
                 sudo systemctl restart nginx
     
     h3 3. Create the Streaming Service
     p To ensure the stream starts automatically on boot and restarts if it crashes, create a systemd service at `/etc/systemd/system/rpicam-stream.service`:
     div.shadow-sm 
-        pre
+        pre.line-numbers
             code.language-bash.
                 [Unit]
                 Description=Raspberry Pi Camera RTMP Stream
@@ -93,7 +93,7 @@ block content
     
     p Reload the systemd daemon, then enable and start the service:
     div.shadow-sm
-        pre
+        pre.line-numbers
             code.language-bash.
                 sudo systemctl daemon-reload 
                 sudo systemctl enable rpicam-stream.service
@@ -102,7 +102,7 @@ block content
     h3 4. Network Configuration
     p Setting a static IP ensures the camera always stays at the same address. I used `nmcli` to configure the IP, gateway, and DNS:
     div.shadow-sm 
-        pre
+        pre.line-numbers
             code.language-bash.
                 sudo nmcli c mod "WIFI-SSID" ipv4.addresses 192.168.0.93/24 ipv4.method manual
                 sudo nmcli con mod "WIFI-SSID" ipv4.gateway 192.168.0.1
@@ -110,14 +110,14 @@ block content
     
     p Apply the changes by restarting the connection:
     div.shadow-sm
-        pre
+        pre.line-numbers
             code.language-bash.
                 sudo nmcli c down "WIFI-SSID" &amp;&amp; sudo nmcli c up "WIFI-SSID"
 
     h3 5. Verify the Stream
     p Finally, test the feed from another computer using a player like MPV or VLC:
     div.shadow-sm 
-        pre
+        pre.line-numbers
             code.language-bash.
                 mpv rtmp://192.168.0.93/live/stream
 
