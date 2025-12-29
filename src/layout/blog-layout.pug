@@ -15,12 +15,12 @@ html(lang='en-us')
                         h1.underline #{title}
                     if date
                         p.small
-                            small.d-block.mb-5.muted Published on #{moment(date)}
+                            small.d-block.mb-4.muted Published on #{moment(date)}
                     block content
 
                     block recent_blogs
                         div#blog-recent-container
-                            h2.underline Recent Blogs
+                            h2 Recent Blogs
                             include ../includes/blog-recent.pug 
         block footer
             include ../includes/footer.pug
