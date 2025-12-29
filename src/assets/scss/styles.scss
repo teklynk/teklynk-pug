@@ -65,9 +65,6 @@ main {
         margin-bottom: 1.5rem;
         margin-top: 1.5rem;
     }
-    .figure-caption {
-        color: $base-color-alt2-muted;
-    }
 }
 
 .home {
@@ -91,9 +88,13 @@ main {
     }
 }
 
-h1.underline, h2.underline {
+.underline {
     border-bottom: solid 1px $base-color3;
     padding-bottom: 12px;
+}
+
+.muted {
+    color: $base-color-alt3-muted !important;
 }
 
 .scrollTop {
