@@ -32,15 +32,16 @@
 <p class="msg" id="statusMsg"></p>
 
 <script>
-  // 👉 Put the exact string you stored as a secret named CONTACT_TOKEN in Cloudflare
   const CONTACT_TOKEN = 'b3c9f1e2-a7d4-4f6b-9e12-d5c8f0ab1234';
   const WORKER_URL    = 'https://delicate-boat-7fd5.teklynk.workers.dev/';
 
-  document.getElementById('contactForm').addEventListener('submit', async e => {
+  document.getElementById('contactForm')
+          .addEventListener('submit', async e => {
     e.preventDefault();
 
     const statusEl = document.getElementById('statusMsg');
     statusEl.textContent = '';
+    statusEl.className = '';
 
     const payload = {
       name:    document.getElementById('name').value.trim(),
@@ -53,25 +54,30 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Contact-Token': CONTACT_TOKEN   // <<< REQUIRED
+          'X-Contact-Token': CONTACT_TOKEN   // required by the worker
         },
         body: JSON.stringify(payload)
       });
 
+      // The worker always returns JSON, even on error
+      const data = await resp.json();
+
       if (!resp.ok) {
-        // Show the exact error message from the worker
+        // Show the exact error string that the worker sent back
         throw new Error(`Worker error (${resp.status}): ${data.error}`);
       }
 
-      const data = await resp.json();
-      statusEl.textContent = data.success ? '✅ Message sent!' : '❌ Something went wrong.';
-      statusEl.className   = data.success ? 'msg' : 'error';
+      // Success path
+      statusEl.textContent = data.success
+        ? '✅ Message sent!'
+        : '❌ Something went wrong.';
+      statusEl.className = data.success ? 'msg' : 'error';
       if (data.success) e.target.reset();
+
     } catch (err) {
       console.error(err);
-      statusEl.textContent = err.message;
-      //statusEl.textContent = '❌ Failed to send – please try again later.';
-      statusEl.className   = 'error';
+      statusEl.textContent = err.message;   // now shows the worker’s error text
+      statusEl.className = 'error';
     }
   });
 </script>
