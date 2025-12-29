@@ -1,99 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Contact Us</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 2rem auto;
-    }
-
-    label {
-      display: block;
-      margin-top: 1rem;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      padding: .5rem;
-      font-size: 1rem;
-    }
-
-    button {
-      margin-top: 1rem;
-      padding: .75rem 1.5rem;
-      font-size: 1rem;
-    }
-
-    .msg {
-      margin-top: 1rem;
-      color: green;
-    }
-
-    .error {
-      color: red;
-    }
+    body {font-family:Arial,sans-serif;max-width:600px;margin:2rem auto;}
+    label {display:block;margin-top:1rem;}
+    input,textarea {width:100%;padding:.5rem;font-size:1rem;}
+    button {margin-top:1rem;padding:.75rem 1.5rem;font-size:1rem;}
+    .msg {margin-top:1rem;color:green;}
+    .error {color:red;}
   </style>
 </head>
-
 <body>
 
-  <h1>Contact Us</h1>
+<h1>Contact Us</h1>
 
-  <form id="contactForm">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required>
+<form id="contactForm">
+  <label for="name">Name</label>
+  <input type="text" id="name" name="name" required>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required>
 
-    <label for="message">Message</label>
-    <textarea id="message" name="message" rows="6" required></textarea>
+  <label for="message">Message</label>
+  <textarea id="message" name="message" rows="6" required></textarea>
 
-    <button type="submit">Send</button>
-  </form>
+  <button type="submit">Send</button>
+</form>
 
-  <p class="msg" id="statusMsg"></p>
+<p class="msg" id="statusMsg"></p>
 
-  <script>
-    const WORKER_URL = 'https://delicate-boat-7fd5.teklynk.workers.dev/';
-    const CONTACT_TOKEN = 'b3c9f1e2-a7d4-4f6b-9e12-d5c8f0ab1234';
+<script>
+  // 👉 Put the exact string you stored as a secret named CONTACT_TOKEN in Cloudflare
+  const CONTACT_TOKEN = 'b3c9f1e2-a7d4-4f6b-9e12-d5c8f0ab1234';
+  const WORKER_URL    = 'https://delicate-boat-7fd5.teklynk.workers.dev/';
 
-    document.getElementById('contactForm').addEventListener('submit', async e => {
-      e.preventDefault();
+  document.getElementById('contactForm').addEventListener('submit', async e => {
+    e.preventDefault();
 
-      const payload = {
-        name: document.getElementById('name').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        message: document.getElementById('message').value.trim()
-      };
+    const statusEl = document.getElementById('statusMsg');
+    statusEl.textContent = '';
 
-      try {
-        const resp = await fetch(WORKER_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+    const payload = {
+      name:    document.getElementById('name').value.trim(),
+      email:   document.getElementById('email').value.trim(),
+      message: document.getElementById('message').value.trim()
+    };
 
-        if (!resp.ok) throw new Error(`Server responded ${resp.status}`);
+    try {
+      const resp = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Contact-Token': CONTACT_TOKEN   // <<< REQUIRED
+        },
+        body: JSON.stringify(payload)
+      });
 
-        // Optionally read a JSON response from the worker
-        const data = await resp.json();
-        statusEl.textContent = data.success ? '✅ Message sent!' : '❌ Something went wrong.';
-        statusEl.className = data.success ? 'msg' : 'error';
-        if (data.success) e.target.reset(); // clear the form on success
-      } catch (err) {
-        console.error(err);
-        statusEl.textContent = '❌ Failed to send - please try again later.';
-        statusEl.className = 'error';
-      }
-    });
-  </script>
+      if (!resp.ok) throw new Error(`Server responded ${resp.status}`);
+
+      const data = await resp.json();
+      statusEl.textContent = data.success ? '✅ Message sent!' : '❌ Something went wrong.';
+      statusEl.className   = data.success ? 'msg' : 'error';
+      if (data.success) e.target.reset();
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = '❌ Failed to send – please try again later.';
+      statusEl.className   = 'error';
+    }
+  });
+</script>
 
 </body>
-
 </html>
