@@ -49,25 +49,17 @@
     };
 
     try {
-      const resp = await fetch(WORKER_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Contact-Token': CONTACT_TOKEN   // <<< REQUIRED
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!resp.ok) throw new Error(`Server responded ${resp.status}`);
-
-      const data = await resp.json();
-      statusEl.textContent = data.success ? '✅ Message sent!' : '❌ Something went wrong.';
-      statusEl.className   = data.success ? 'msg' : 'error';
-      if (data.success) e.target.reset();
+      const resp = await fetch(WORKER_URL, { … });
+      const data = await resp.json();               // always parse JSON
+      if (!resp.ok) {
+        // Show the exact error message from the worker
+        throw new Error(`Worker error (${resp.status}): ${data.error}`);
+      }
+      // success path …
     } catch (err) {
       console.error(err);
-      statusEl.textContent = '❌ Failed to send – please try again later.';
-      statusEl.className   = 'error';
+      statusEl.textContent = err.message;   // show the detailed message
+      statusEl.className = 'error';
     }
   });
 </script>
