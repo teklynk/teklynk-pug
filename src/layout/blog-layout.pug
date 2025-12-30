@@ -14,8 +14,7 @@ html(lang='en-us')
                     if title
                         h1.underline #{title}
                     if date
-                        p.small
-                            small.d-block.mb-4.muted Published on #{moment(date)}
+                        small.d-block.mb-4.muted Published on #{moment(date)}
                     block content
 
                     block recent_blogs
