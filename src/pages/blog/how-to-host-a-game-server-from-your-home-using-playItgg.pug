@@ -4,12 +4,12 @@ block title
     - var date = "2025-11-02"
     - var title = "How to Host a Game Server From Your Home Using PlayIt.gg"
     - var description = "Simple and secure way to host game servers from your home network using PlayIt.gg tunnels"
-    - var thumbnail = "https://www.teklynk.com/assets/images/playit-Screenshot%20from%202025-11-02%2022-55-01.png"
+    - var thumbnail = "https://www.teklynk.com/assets/images/playit-Screenshot%20from%202025-11-02%2022-55-01.jpg"
     - var pageUrl = "https://www.teklynk.com/blog/how-to-host-a-game-server-from-your-home-using-playItgg"
     | Teklynk - #{title}
 
 block content
-    img.img-fluid.mb-4.shadow-sm(src="/assets/images/playit-Screenshot from 2025-11-02 22-55-01.png", alt="PlayIt: Diagram showing how playit works")
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/playit-Screenshot from 2025-11-02 22-55-01.jpg", alt="PlayIt: Diagram showing how playit works")
 
     p Have you ever wanted to host a game server from home, only to be stopped by the technical and security hurdles? The process often involves opening ports on your router, exposing your home IP address, and dealing with dynamic IPs that can change without warning.
     p In a previous post, I explored using  #[a(href="/blog/expose-your-home-server-securely-with-cloudflare-tunnels", target="_self") Cloudflare Tunnels] to host web services securely. While they are excellent for web traffic, they have a key limitation: they primarily support TCP-based protocols.
@@ -29,8 +29,8 @@ block content
         li Select the number of ports and enter the local port your game server is running on. For example, the default port for Minecraft: Java Edition is `25565`.
         li After creating the tunnel, PlayIt.gg will assign you a static IP and a unique domain (e.g., `your-game.at.ply.gg:7261`) that you can safely share with your friends.
 
-    img.img-fluid.mb-4.shadow-sm(src="/assets/images/playit-Screenshot from 2025-11-02 21-55-26.png", alt="PlayIt: Set up server region, protocol and port number")
-    img.img-fluid.mb-4.shadow-sm(src="/assets/images/playit-Screenshot from 2025-11-02 21-56-24.png", alt="PlayIt: Showing Playit agent and client connection to PlayIt servers")
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/playit-Screenshot from 2025-11-02 21-55-26.jpg", alt="PlayIt: Set up server region, protocol and port number")
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/playit-Screenshot from 2025-11-02 21-56-24.jpg", alt="PlayIt: Showing Playit agent and client connection to PlayIt servers")
 
     h3 Running as a Service
     p The PlayIt client doesn't start automatically on boot, so you'll need to create a system service to manage it. Here is an example `systemd` service file for Linux.
