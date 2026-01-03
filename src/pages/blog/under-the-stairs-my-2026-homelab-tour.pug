@@ -1,0 +1,50 @@
+extends ../../layout/blog-layout.pug
+
+block title
+    - var date = "2026-01-02"
+    - var title = "Under the Stairs: My 2026 Homelab Tour"
+    - var description = "A deep dive into my wall-mounted, repurposed server closet. How I power my digital life with retired hardware."
+    - var thumbnail = "https://www.teklynk.com/assets/images/homelab-IMG_0815.jpg"
+    - var pageUrl = "https://www.teklynk.com/blog/my-homelab-setup-2026"
+    | Teklynk - #{title}
+
+block content
+    p For over 15 years, I have maintained some sort of "homelab." It has evolved from a single desktop to this current iteration, serving as my personal sandbox to learn, break, and occasionally fix things. My philosophy is simple. Reuse and repurpose. When I upgrade my gaming PC, the old parts don't get sold. They get a promotion to "Server" status. This cycle of upcycling has defined my setup for a decade and a half.
+
+    p I am fully aware this setup won't be winning any design awards. It is a jumble of cables and blinking lights hiding in a closet. I close the door and pretend the cable management is perfect. However, I hope this shows what is possible with limited resources and a bit of stubbornness. Perhaps it will inspire you to find a new purpose for your own retired hardware.
+
+    h2 The Homelab 
+
+    p Welcome to the nerve center. Yes, it lives in a utility closet under the stairs. Years ago, I wired the house with Ethernet, terminating everything here. It connects to a Gigabit switch, then the router, and finally the modem.
+    
+    p Despite looking like a bomb defusal scene, this closet powers my entire digital life. Media streaming, game servers, ad-blocking, backups, and home automation. It works so seamlessly that I often forget it is there until the internet goes out and the house goes quiet.
+    
+    p My workstations automatically mount NFS volumes and perform background backups, while a Raspberry Pi running Pi-hole silently protects every device from ads and malicious sites. It is a "set it and forget it" system that just works.
+    
+    img.img-fluid.mb-4.shadow(src="/assets/images/homelab-IMG_0815.jpg", alt="")
+
+    h2 What Am I Looking At?
+
+    p To save space, I avoided a massive server rack. The main server is wall-mounted using a standard "under-desk" PC mount. It houses components from my retired 2018 desktop, living inside a case I kept solely for its drive bays. It runs Ubuntu Server and handles everything from Plex to Docker containers. It even has a GTX 1080, mostly for transcoding.
+
+    p To the left hangs a Dell PowerEdge R620. I rarely turn it on because it sounds like a jet engine preparing for takeoff. It is mostly there for me to learn enterprise hardware. I have it on a smart plug so I can shout "Alexa, turn on the server" and feel like a hacker.
+
+    p Up top is a 2010 Mac Mini. In tech years, it is ancient. Yet, with 16GB of RAM and 2 500GB SSDs, it runs Proxmox and hosts VMs without complaining.
+
+    p Two Raspberry Pi 3B+ units are mounted to the wall. One runs Pi-hole to block ads, and the other handles VPN duties for remote access to my home network. I keep them separate so that when I inevitably break the main server configuration, the internet remains intact while I figure out what happened.
+
+    p Tucked away is an old router broadcasting a separate network for 2.4 Ghz IoT devices. It keeps my smart bulbs and questionable smart plugs isolated from my personal data and main network. They get internet access, but they don't get to talk to the main computers.
+
+    p On the floor sit two UPS battery backups. They are definitely too small to keep things running through a long blackout, but they help with power blips and brownouts.
+
+    p I have a small monitor on an arm for the rare occasion I need physical access. No fancy KVM switch here. I just move a wireless keyboard dongle around to each server. Since 99% of my work is done via SSH from the comfort of my desk, this manual approach works fine.
+
+    p Finally, the supporting infrastructure like modems and power strips are organized using custom 3D-printed brackets. If it can be measured, it can be mounted.
+
+    h2 Thoughts 
+
+    p I hope this look inside my messy server closet inspires you. You don't need thousands of dollars of enterprise gear. That old laptop with a broken screen or the desktop gathering dust in the garage is a perfect server waiting to happen. Spin up some Docker containers, break some configs, and learn something new.
+
+    p Once your hardware is running, you can explore automations using cron jobs and Bash scripts. I even have some of my scripts send me a Discord notification when they run, or when they fail.
+
+    p For more details on the specific services I run and how to configure them, check out my other posts on #[a(href="/blog/expose-your-home-server-securely-with-cloudflare-tunnels") Cloudflare Tunnels], #[a(href="/blog/how-to-host-a-game-server-from-your-home-using-playItgg") Playit.gg], and #[a(href="/blog/personal-files-backup-with-rsync") automatic backup strategies].
