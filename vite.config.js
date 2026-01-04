@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import vitePluginPugI18n from 'vite-plugin-pug-i18n'
-import vitePluginGenerateIndex from './vite-plugin-generate-index'
+import vitePluginGenerateBlogList from './vite-plugin-generate-blog-list'
+import vitePluginGenerateRss from './vite-plugin-generate-rss'
 import dateformat from './dateformat'
 
 export default defineConfig({
@@ -30,9 +31,11 @@ export default defineConfig({
                 "pretty": process.env.NODE_ENV === "development"
             },
         }),
-        vitePluginGenerateIndex()
+        vitePluginGenerateBlogList(),
+        vitePluginGenerateRss()
     ],
     build: {
+        emptyOutDir: true,
         rollupOptions: {
             output: {
                 chunkFileNames: 'assets/main-[hash].js'
