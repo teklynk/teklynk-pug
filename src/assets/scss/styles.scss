@@ -55,6 +55,10 @@ iframe.letterbird-embed {
     background-color: $base-panel-bg !important;
 }
 
+.badge.bg-secondary {
+    color: inherit !important;
+}
+
 main {
     a, a.list-group-item, a.list-group-item-action {
         text-decoration: none !important;
