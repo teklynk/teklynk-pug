@@ -12,7 +12,7 @@ block content
 
     h1.underline Hi there, I'm Ryan
     p Full-stack tinkerer building interactive tools, websites and web applications. Specializing in PHP, JavaScript/Node.js, APIs and Python. Over 15 years of experience designing, building, and scaling web applications for enterprise, government, and e-commerce environments.
-    h2.underline What I'm Working On
+    h2.underline What I'm working on
     ul 
         li #[a(href="https://github.com/teklynk/piratebox", target="_blank") PirateBox] - Inspired by the discontinued #[a(href="https://en.wikipedia.org/wiki/PirateBox", target="_blank") PirateBox project], this lightweight implementation uses Nginx, PHP, dnsmasq, and hostapd without requiring a database. It functions as a "captive portal" similar to public Wi-Fi login pages found in hotels or libraries, but instead of requesting credentials, it immediately serves the file-sharing page.
         li #[a(href="https://github.com/teklynk/notes", target="_blank") notes] - A simple, self-hosted, encrypted notes application built with Python, Flask, SQLite, Docker.
@@ -30,7 +30,7 @@ block content
         li #[a(href="https://github.com/teklynk/twitch_chat_alerts", target="_blank") twitch_chat_alerts] - Twitch chat alerts overlay. Supports chat commands, sound alerts, video alerts, gifs, shout-outs, random chat messages.
         li #[a(href="https://github.com/teklynk/twitch-chat-overlay-starter", target="_blank") twitch-chat-overlay-starter] - Twitch chat overlay using TMI.js. Basics needed for creating your own custom chat overlay.
         li #[a(href="https://github.com/teklynk/elements", target="_blank") elements] - Twitch Web UI for creating OBS overlays - Laravel, PHP, MySQL.
-    h2.underline What I'm Learning
+    h2.underline What I'm learning
     ul 
         li n8n.io
         li Python and Flask
@@ -38,8 +38,13 @@ block content
         li Vue.js
         li Bash scripting for workflow automation
         li Studying for Linux certifications
+    h2.underline My skills
+    ul.list-inline
+        - var skills = ['HTML', 'CSS', 'JavaScript', 'PHP', 'Wordpress', 'Vue.js', 'Node.js', 'NGINX', 'Git', 'Bootstrap', 'SCSS', 'MySQL', 'Postgres', 'SQLite', 'Linux', 'Python', 'Typescript', 'Bash', 'Laravel', 'Docker', 'Apache', 'ProxMox', 'Cloudflare', 'AWS', 'Oracle Cloud', 'Vite']
+        each skill in skills.sort()
+            li.list-inline-item.badge.bg-secondary.p-2.m-1.fs-6= skill
     h2.underline About this site 
     p This site is built with #[a(href="https://pugjs.org/api/getting-started.html", target="_blank") Pug] and #[a(href="https://vitejs.dev/", target="_blank") Vite], brought together by the #[a(href="https://www.npmjs.com/package/vite-plugin-pug-i18n", target="_blank") vite-plugin-pug-i18n] npm plugin. It's hosted for free on #[a(href="https://pages.cloudflare.com/", target="_blank") Cloudflare Pages], which automatically builds and deploys the site whenever I push changes to #[a(href="https://github.com/teklynk/teklynk-pug", target="_blank") GitHub].
 
-    h2.underline Recent Blogs
+    h2.underline Recent blogs
     include ../includes/blog-recent.pug
