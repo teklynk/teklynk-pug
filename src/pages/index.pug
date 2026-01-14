@@ -42,7 +42,7 @@ block content
     ul.list-inline
         - var skills = ['HTML', 'CSS', 'JavaScript', 'PHP', 'Wordpress', 'Vue.js', 'Node.js', 'NGINX', 'Git', 'Bootstrap', 'SCSS', 'MySQL', 'Postgres', 'SQLite', 'Linux', 'Python', 'Typescript', 'Bash', 'Laravel', 'Docker', 'Apache', 'ProxMox', 'Cloudflare', 'AWS', 'Oracle Cloud', 'Vite']
         each skill in skills.sort()
-            li.list-inline-item.badge.bg-secondary.p-2.m-1.fs-6= skill
+            li.list-inline-item.badge.bg-secondary.shadow-sm.p-2.m-1.fs-6= skill
     h2.underline About this site 
     p This site is built with #[a(href="https://pugjs.org/api/getting-started.html", target="_blank") Pug] and #[a(href="https://vitejs.dev/", target="_blank") Vite], brought together by the #[a(href="https://www.npmjs.com/package/vite-plugin-pug-i18n", target="_blank") vite-plugin-pug-i18n] npm plugin. It's hosted for free on #[a(href="https://pages.cloudflare.com/", target="_blank") Cloudflare Pages], which automatically builds and deploys the site whenever I push changes to #[a(href="https://github.com/teklynk/teklynk-pug", target="_blank") GitHub].
 
