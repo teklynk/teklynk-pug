@@ -13,6 +13,7 @@ function extractVars(content) {
         date: vars.date || 'Unknown Date',
         title: vars.title || 'Untitled',
         description: vars.description || 'No description available.',
+        thumbnail: vars.thumbnail,
     };
 }
 
@@ -34,19 +35,20 @@ function generateRssFeed() {
     const posts = pugFiles.map(pugFile => {
         const filePath = resolve(blogPath, pugFile);
         const fileContent = fs.readFileSync(filePath, 'utf-8');
-        const { date, title, description } = extractVars(fileContent);
+        const { date, title, description, thumbnail } = extractVars(fileContent);
         const fileName = pugFile.replace('.pug', '');
         if (fileName === 'index') return null;
-        return { date, title, description, fileName };
+        return { date, title, description, fileName, thumbnail };
     }).filter(Boolean);
 
     // Sort posts by date
     posts.sort((a, b) => moment(b.date).diff(moment(a.date)));
 
-    const feedItems = posts.slice(0, 20).map(({ date, title, description, fileName }) => {
+    const feedItems = posts.slice(0, 20).map(({ date, title, description, fileName, thumbnail }) => {
         const postUrl = `${site_url}/blog/${fileName}`;
         // RSS spec requires RFC 822 date format
-        const pubDate = moment(date).utc().format('ddd, DD MMM YYYY HH:mm:ss ZZ');
+        const pubDate = moment(date).utc().startOf('day').format('ddd, DD MMM YYYY HH:mm:ss ZZ');
+        const mediaContent = thumbnail ? `<media:content url="${thumbnail}" medium="image" />` : '';
         return `
     <item>
       <title><![CDATA[${title}]]></title>
@@ -54,11 +56,12 @@ function generateRssFeed() {
       <link>${postUrl}</link>
       <guid isPermaLink="true">${postUrl}</guid>
       <pubDate>${pubDate}</pubDate>
+      ${mediaContent}
     </item>`;
     }).join('');
 
     const rssContent = `<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
 <channel>
   <title>${site_title}</title>
   <link>${site_url}</link>
