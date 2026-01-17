@@ -52,7 +52,7 @@ function generateList() {
             ${thumbnail ? `a.hover-zoom(href="/portfolio/${fileName}.html")
                 img.card-img-top(src="${thumbnail}" alt="${title}")` : ''}
             .card-body
-                h5.card-title ${title}
+                h2.card-title.mt-0 ${title}
                 p.card-text ${description}
             .card-footer.d-flex.justify-content-between.align-items-center.h-40px
                 a.btn.btn-link.p-0.m-0(href="/portfolio/${fileName}.html", target="_self") Read More
