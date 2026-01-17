@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import vitePluginPugI18n from 'vite-plugin-pug-i18n'
 import vitePluginGenerateBlogList from './vite-plugin-generate-blog-list'
+import vitePluginGeneratePortfolioList from './vite-plugin-generate-portfolio-list'
 import vitePluginGenerateRss from './vite-plugin-generate-rss'
 import dateformat from './dateformat'
 
@@ -32,6 +33,7 @@ export default defineConfig({
             },
         }),
         vitePluginGenerateBlogList(),
+        vitePluginGeneratePortfolioList(),
         vitePluginGenerateRss()
     ],
     build: {

@@ -4,7 +4,7 @@ html(lang='en-us')
         include ../includes/meta.pug
     body
         block nav
-            - var page = "blogs"
+            - var page = "portfolio"
         block header
             include ../includes/header.pug
         main#main(role="main")
@@ -21,10 +21,6 @@ html(lang='en-us')
                                 p.p-0.m-0.fs-4: a(href=gitHubUrl, target="_blank", title="Check it out on GitHub"): i.fab.fa-github
                     block content
 
-                    block recent_blogs
-                        div#blog-recent-container
-                            h2 Recent blogs
-                            include ../includes/blog-recent.pug 
         block footer
             include ../includes/footer.pug
         block script

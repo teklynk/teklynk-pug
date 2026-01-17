@@ -10,6 +10,14 @@ body {
     font-size: $base-font-size;
 }
 
+.h-40px {
+    height: 40px;
+}
+
+.h-60px {
+    height: 60px;
+}
+
 .hide {
     display: none;
 }
@@ -57,6 +65,10 @@ iframe.letterbird-embed {
 
 .badge.bg-secondary {
     color: inherit !important;
+}
+
+.btn-secondary {
+    background-color: $base-panel-bg !important;
 }
 
 main {
@@ -122,4 +134,31 @@ pre[class*=language-] {
     background: $base-panel-bg !important;
     font-size: $base-font-size;
     font-family: $base-font1;
+}
+
+.hover-zoom {
+    overflow: hidden;
+    display: block;
+    border-radius: 0;
+
+    img {
+        transition: transform 0.3s ease;
+    }
+    &:hover img, &:focus img {
+        transform: scale(1.10);
+        
+    }
+}
+
+.card {
+    border-radius: 0 !important;
+    background-color: $base-panel-bg !important;
+    border-color: $base-panel-bg !important;
+    color: $base-color-alt2 !important;
+}
+
+.card-img-top {
+    border-radius: 0;
+    height: 240px;
+    object-fit: cover;
 }
