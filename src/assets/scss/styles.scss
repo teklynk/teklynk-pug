@@ -142,10 +142,10 @@ pre[class*=language-] {
     border-radius: 0;
 
     img {
-        transition: transform 0.3s ease;
+        transition: transform 0.5s ease;
     }
     &:hover img, &:focus img {
-        transform: scale(1.10);
+        transform: scale(1.20);
         
     }
 }
@@ -161,4 +161,5 @@ pre[class*=language-] {
     border-radius: 0;
     height: 240px;
     object-fit: cover;
+    object-position: top;
 }
