@@ -1,0 +1,25 @@
+extends ../../layout/portfolio-layout.pug
+
+block title
+    - var date = "2026-01-14"
+    - var title = "Twitch Clips Player OBS Overlay"
+    - var description = "OBS overlay that automatically plays clips from Twitch. Clips can be random or in the order they were created."
+    - var thumbnail = "/assets/images/portfolio/Screenshot from 2026-01-19 23-02-37.jpg"
+    - var pageUrl = "https://www.teklynk.com/portfolio/twitch-clips-player-obs-overlay.pug"
+    - var gitHubUrl = "https://github.com/teklynk/twitch_clips_player"
+    - var skills = ['JQuery', 'CSS', 'HTML', 'Javascript', 'Node.js', 'API']
+    | Teklynk - #{title}
+
+block content
+    ul.list-inline
+        each skill in skills.sort()
+            li.list-inline-item.badge.bg-secondary.shadow-sm.p-2.m-1.fs-6= skill
+    
+    p Designed as an engaging browser source overlay for OBS, this tool automatically cycles through Twitch clips to keep viewers entertained during "BRB" or "Starting Soon" scenes. It offers granular control via Twitch chat commands, enabling streamers and moderators to manage playback with actions like skip, pause, and reload. The player supports fetching clips from specific channels or a user's following list, with intelligent filtering for date ranges and featured content—falling back to popular clips if necessary. Additional features include a customizable details panel with dynamic variables, custom CSS theming, and extensive URL parameter configuration, making it a flexible solution for enhancing stream production value.
+
+    p Try it here: #[a(href="https://twitch-clips-player.pages.dev/", target="_blank") https://twitch-clips-player.pages.dev/]
+
+    .row
+        .col-lg-12.col-md-12.mb-4.mb-lg-0
+            video.w-100.shadow-1-strong.mb-4(autoplay, loop, muted, playsinline, controls)
+                source(src="/assets/images/portfolio/portfolio-twitch-clips-player.webm", type="video/webm")

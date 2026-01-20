@@ -1,0 +1,24 @@
+extends ../../layout/portfolio-layout.pug
+
+block title
+    - var date = "2026-01-13"
+    - var title = "Twitch Shout-out overlay"
+    - var description = "Twitch Shout out command. !so channelname. This will display a random clip and say a shout out message in chat."
+    - var thumbnail = "/assets/images/portfolio/Screenshot from 2026-01-19 23-56-22.png"
+    - var pageUrl = "https://www.teklynk.com/portfolio/twitch-shout-out-clips-player-obs-overlay.pug"
+    - var gitHubUrl = "https://github.com/teklynk/twitch_shoutout"
+    - var skills = ['JQuery', 'CSS', 'HTML', 'Javascript', 'Node.js', 'API']
+    | Teklynk - #{title}
+
+block content
+    ul.list-inline
+        each skill in skills.sort()
+            li.list-inline-item.badge.bg-secondary.shadow-sm.p-2.m-1.fs-6= skill
+    
+    p Built with TMI.js and vanilla web technologies, this OBS browser source overlay enables streamers to give dynamic, media-rich shout-outs via chat commands. When triggered (e.g., !so @username), it fetches and plays a popular clip from the mentioned user's channel, falling back to their profile image if no clips exist. The tool features extensive customization through URL parameters, allowing for automatic raid shout-outs, custom chat responses, visual theming, and moderator controls to stop or replay clips. It operates entirely client-side, requiring no backend database, and integrates seamlessly with Twitch chat for real-time interaction.
+
+    p Try it here: #[a(href="https://twitch-shoutout.pages.dev/", target="_blank") https://twitch-shoutout.pages.dev/]
+
+    .row
+        .col-lg-12.col-md-12.mb-4.mb-lg-0
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 23-56-22.png", alt="")
