@@ -7,11 +7,11 @@ block title
     - var thumbnail = "https://www.teklynk.com/assets/images/portfolio/Screenshot from 2026-01-19 21-52-02.jpg"
     - var pageUrl = "https://www.teklynk.com/portfolio/quakecon-2025-website-design-static-site-generator"
     - var gitHubUrl = ""
+    - var skills = ['Pug', 'Vite', 'Node.js', 'Boostrap', 'SCSS', 'Tiltify', 'TypeScript', 'Javascript', 'Cloudflare']
     | Teklynk - #{title}
 
 block content
     ul.list-inline
-        - var skills = ['Pug', 'Vite', 'Node.js', 'Boostrap', 'SCSS', 'Tiltify', 'TypeScript', 'Javascript', 'Cloudflare']
         each skill in skills.sort()
             li.list-inline-item.badge.bg-secondary.shadow-sm.p-2.m-1.fs-6= skill
     

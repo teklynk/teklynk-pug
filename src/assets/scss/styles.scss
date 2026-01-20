@@ -63,8 +63,16 @@ iframe.letterbird-embed {
     background-color: $base-panel-bg !important;
 }
 
+.bg-secondary-dark {
+    background-color: $base-color1;
+}
+
 .badge.bg-secondary {
     color: inherit !important;
+}
+
+.badge.bg-secondary-dark {
+    color: inherit;
 }
 
 .btn-secondary {
