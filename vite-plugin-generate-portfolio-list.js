@@ -4,17 +4,17 @@ import moment from 'moment';
 
 function extractVars(content) {
     const vars = {};
-    const varRegex = /- var (\w+)\s*=\s*(?:['"](.*?)['"]|(\[.*?\]))/g;
+    const varRegex = /- var (\w+)\s*=\s*(?:(["'])(.*?)\2|(\[.*?\]))/g;
     let match;
     while ((match = varRegex.exec(content)) !== null) {
-        if (match[3]) {
+        if (match[4]) {
             try {
-                vars[match[1]] = JSON.parse(match[3].replace(/'/g, '"'));
+                vars[match[1]] = JSON.parse(match[4].replace(/'/g, '"'));
             } catch (e) {
                 vars[match[1]] = [];
             }
         } else {
-            vars[match[1]] = match[2];
+            vars[match[1]] = match[3];
         }
     }
     return {

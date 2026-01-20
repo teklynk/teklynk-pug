@@ -4,10 +4,10 @@ import moment from 'moment';
 
 function extractVars(content) {
     const vars = {};
-    const varRegex = /- var (\w+)\s*=\s*['"](.*?)['"]/g;
+    const varRegex = /- var (\w+)\s*=\s*(["'])(.*?)\2/g;
     let match;
     while ((match = varRegex.exec(content)) !== null) {
-        vars[match[1]] = match[2];
+        vars[match[1]] = match[3];
     }
     return {
         date: vars.date || 'Unknown Date',
