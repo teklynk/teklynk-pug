@@ -14,7 +14,7 @@ html(lang='en-us')
                     if title
                         h1.underline #{title}
                     if gitHubUrl
-                        .d-flex.justify-content-between.align-items-center.flex-wrap.mb-4
+                        .d-flex.justify-content-end.align-items-center.flex-wrap.mb-4
                             p.p-0.m-0.fs-4: a(href=gitHubUrl, target="_blank", title="Check it out on GitHub"): i.fab.fa-github
                     block content
 
