@@ -4,10 +4,26 @@ block title
     - var date = "2026-01-16"
     - var title = "QuakeCon 2025: Website design and static site generator"
     - var description = "Designed and built a bespoke SSG using Pug for templating and Vite.js for fast bundling. Event Schedule Integration"
-    - var thumbnail = "/assets/images/portfolio-quakecon-2025-01.jpg"
+    - var thumbnail = "https://www.teklynk.com/assets/images/portfolio/Screenshot from 2026-01-19 21-52-02.jpg"
     - var pageUrl = "https://www.teklynk.com/portfolio/quakecon-2025-website-design-static-site-generator"
     - var gitHubUrl = ""
     | Teklynk - #{title}
 
 block content
+    ul.list-inline
+        - var skills = ['Pug', 'Vite', 'Node.js', 'Boostrap', 'SCSS', 'Tiltify', 'TypeScript', 'Javascript', 'Cloudflare']
+        each skill in skills.sort()
+            li.list-inline-item.badge.bg-secondary.shadow-sm.p-2.m-1.fs-6= skill
     
+    p This project began as a custom WordPress child theme and evolved into a high-performance, secure static website. The initial transition involved a static-site export plugin to harden security by eliminating dynamic PHP execution. Subsequently, I engineered a bespoke Static-Site Generator (SSG) from the ground up, leveraging Pug for powerful templating and Vite.js for rapid bundling. A key innovation was a custom Vite plugin that automatically parses the event schedule from a CSV file, rendering it into responsive HTML tables and enabling organizers to update the agenda by simply dropping in a new file. This modern stack resulted in a significant reduction in page-load times and eliminated server-side vulnerabilities, with the final site deployed on a scalable architecture using Cloudflare's CDN for global caching and performance.
+
+    .row
+        .col-lg-4.col-md-12.mb-4.mb-lg-0
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-52-02.jpg", alt="")
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-54-41.jpg", alt="")
+        .col-lg-4.mb-4.mb-lg-0
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-53-32.jpg", alt="")
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-53-01.jpg", alt="")
+        .col-lg-4.mb-4.mb-lg-0
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-55-13.jpg", alt="")
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-54-16.jpg", alt="")

@@ -1,0 +1,24 @@
+extends ../../layout/portfolio-layout.pug
+
+block title
+    - var date = "2026-01-15"
+    - var title = "Twitch API Gateway Service"
+    - var description = "Simple PHP Twitch API Gateway that only requires the user/channel name to return data"
+    - var thumbnail = "https://www.teklynk.com/assets/images/portfolio/Screenshot from 2026-01-19 22-25-07.png"
+    - var pageUrl = "https://www.teklynk.com/portfolio/twitch-api-gateway-service.pug"
+    - var gitHubUrl = "https://github.com/teklynk/twitch_api_public"
+    | Teklynk - #{title}
+
+block content
+    ul.list-inline
+        - var skills = ['PHP', 'Composer', 'Guzzle', 'Cloudflare', 'Docker', 'NGINX', 'API']
+        each skill in skills.sort()
+            li.list-inline-item.badge.bg-secondary.shadow-sm.p-2.m-1.fs-6= skill
+    
+    p This project implements a self-hosted Twitch API gateway that simplifies data access by requiring only a channel name, effectively acting as a public proxy to Twitch's API. It is designed for developers building custom tools who wish to avoid managing client IDs and authentication tokens directly in their applications; the service handles token lifecycle automatically, refreshing credentials daily. Built on a lightweight stack using PHP and Nginx without the need for a database, it supports Docker for easy deployment and is optimized for use behind Cloudflare to leverage proxying, DDoS protection, and rate limiting. The system operates via simple GET requests and includes advanced filtering capabilities, such as retrieving featured clips.
+
+    p Documentation can be found here: #[a(href="https://twitchapi.teklynk.com/docs/", target="_blank") https://twitchapi.teklynk.com/docs/]
+
+    .row
+        .col-lg-12.col-md-12.mb-4.mb-lg-0
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 22-25-07.png", alt="")

@@ -1,13 +1,43 @@
 extends ../../layout/portfolio-layout.pug
 
 block title
-    - var date = "2026-01-16"
+    - var date = "2026-01-19"
     - var title = "Save&Raid: Website design and custom CMS"
     - var description = "Designed & built a purpose made content management system from the ground up, using PHP, SQLite, and Composer to deliver a robust, scalable solution that meets the event's unique workflow"
-    - var thumbnail = "/assets/images/portfolio-saveandraid-01.jpg"
+    - var thumbnail = "https://www.teklynk.com/assets/images/portfolio/Screenshot from 2026-01-19 21-42-12.jpg"
     - var pageUrl = "https://www.teklynk.com/portfolio/saveandraid-website-design-and-custom-cms"
     - var gitHubUrl = ""
     | Teklynk - #{title}
 
 block content
+
+    ul.list-inline
+        - var skills = ['PHP', 'SQLite', 'Composer', 'Boostrap', 'TinyMCE', 'Tiltify', 'Discord', 'API', 'NGINX', 'Javascript', 'YouTube', 'Fourthwall', 'Linux', 'Linode', 'Cloudflare']
+        each skill in skills.sort()
+            li.list-inline-item.badge.bg-secondary.shadow-sm.p-2.m-1.fs-6= skill
+
+    p For this project, I designed and built a purpose-made content management system from the ground up using PHP, SQLite, and Composer to deliver a robust, scalable solution tailored to the event's unique workflow. By implementing a clean MVC pattern with a full-featured admin panel, I enabled event coordinators to create, edit, and publish website content without needing developer assistance. The platform integrates seamlessly with Tiltify, Twitch, Discord, and major social media platforms, providing participants with tools to amplify their online presence and drive engagement. Additionally, I developed a custom API that allows participants to extend the platform with their own integrations, fostering a flexible ecosystem. The entire system is deployed on a hardened Linode Ubuntu server behind NGINX, protected by Cloudflare DNS and Zero-Trust security, ensuring high availability and strong protection for all users.
     
+    .row
+        .col-lg-4.col-md-12.mb-4.mb-lg-0
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-06-54.jpg", alt="")
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-01-19.jpg", alt="")
+        .col-lg-4.mb-4.mb-lg-0
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-03-50.jpg", alt="")
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-07-36.jpg", alt="")
+        .col-lg-4.mb-4.mb-lg-0
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-06-16.jpg", alt="")
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-05-28.jpg", alt="")
+
+    h2.underline Custom built CMS - Admin Panel
+
+    .row
+        .col-lg-4.col-md-12.mb-4.mb-lg-0
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-17-30.jpg", alt="")
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-18-21.jpg", alt="")
+        .col-lg-4.col-md-12.mb-4.mb-lg-0
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-24-49.jpg", alt="")
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-25-18.jpg", alt="")
+        .col-lg-4.col-md-12.mb-4.mb-lg-0
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-25-53.jpg", alt="")
+            img.w-100.shadow-1-strong.mb-4(src="/assets/images/portfolio/Screenshot from 2026-01-19 21-26-46.jpg", alt="")
