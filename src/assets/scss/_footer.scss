@@ -6,27 +6,7 @@ footer {
     p.small small {
         color: $base-color-alt3-muted;
     }
-    .social-media-icons {
-        a {
-            color: $base-color-alt2;
-            text-transform: uppercase;
-            text-decoration: none;
-            font-weight: bold;
-            &:hover, &:focus, &.active {
-                i {
-                    color: $base-color-alt4;
-                }
-                color: $base-color-alt4;
-                text-decoration: underline;
-            }
-        }
-        .list-inline-item:not(:last-child) {
-            margin-right: 1.5rem;
-        }
-        i {
-            font-size: 1.5em;
-        }
-    }
+
 }
 
 .footer-logo {
