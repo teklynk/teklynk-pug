@@ -14,6 +14,7 @@ Simply configure your deployment provider to serve the dist directory after runn
 - **i18n Support**: Multi-language support via `vite-plugin-pug-i18n`.
 - **RSS Feed**: Includes RSS feed generation.
 - **Cross-Platform Scripts**: Uses `cross-env` to ensure scripts run on Windows and POSIX systems.
+- **Supports**: Layouts, includes, variables, scss, template logic, plugins, multiple pages.
 
 ## Prerequisites
 
