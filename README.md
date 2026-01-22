@@ -1,12 +1,18 @@
 # Teklynk Pug Project
 
-This project is a web application built using [Vite](https://vitejs.dev/) and [Pug](https://pugjs.org/) templates. It leverages `vite-plugin-pug-i18n` for handling internationalization within Pug files.
+This project is a static site generator built using Vite and Pug templates. It is great for blogs and portfolio websites, and leverages `vite-plugin-pug-i18n` for handling internationalization within Pug files.
+
+## Deployment 
+Since this project generates static assets (HTML, CSS, JavaScript, images), it can be easily deployed on Cloudflare Pages, GitHub Pages, or other JAMstack environments. 
+
+Simply configure your deployment provider to serve the dist directory after running the build command.
 
 ## Features
 
 - **Vite**: Fast development server and build tool.
 - **Pug**: Robust template engine for Node.js.
 - **i18n Support**: Multi-language support via `vite-plugin-pug-i18n`.
+- **RSS Feed**: Includes RSS feed generation.
 - **Cross-Platform Scripts**: Uses `cross-env` to ensure scripts run on Windows and POSIX systems.
 
 ## Prerequisites
