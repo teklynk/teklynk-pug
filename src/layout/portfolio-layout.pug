@@ -13,9 +13,12 @@ html(lang='en-us')
                 .container.pb-3.pt-3
                     if title
                         h1.underline #{title}
-                    if gitHubUrl
-                        .d-flex.justify-content-end.align-items-center.flex-wrap.mb-4
-                            p.p-0.m-0.fs-4: a(href=gitHubUrl, target="_blank", title="Check it out on GitHub"): i.fab.fa-github
+                    if date || gitHubUrl
+                        .d-flex.justify-content-between.align-items-center.flex-wrap.mb-4
+                            if date
+                                small.muted.invisible Published on #{moment(date)}
+                            if gitHubUrl
+                                p.p-0.m-0.fs-4: a(href=gitHubUrl, target="_blank", title="Check it out on GitHub"): i.fab.fa-github
                     block content
 
         block footer
