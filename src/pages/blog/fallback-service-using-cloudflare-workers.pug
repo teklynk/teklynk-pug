@@ -1,0 +1,77 @@
+extends ../../layout/blog-layout.pug
+
+block title
+    - var date = "2026-02-07"
+    - var title = "Automated Failover with Cloudflare Workers"
+    - var description = "Learn how to implement instant, transparent failover for your web services using Cloudflare Workers, avoiding DNS propagation delays and ensuring maximum uptime."
+    - var thumbnail = "/assets/images/cloudflare-fallback-1.jpg"
+    - var pageUrl = "https://www.teklynk.com/blog/fallback-service-using-cloudflare-workers"
+    - var gitHubUrl = ""
+    | Teklynk - #{title}
+
+block content
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/cloudflare-fallback-1.jpg", alt="")
+
+    p I manage a high-availability API service, `api.example.com`, that requires maximum uptime. This makes server maintenance, upgrades, and migrations challenging, as I cannot simply inform users of a multi-hour outage.
+    p Initially, I set up a redundant API service on a second server with its own subdomain, `api2.example.com`. With proper NGINX configuration, this secondary server could accept requests for both domains. To perform maintenance, I would manually update the Cloudflare DNS settings for `api.example.com` to point to the secondary server's IP address. While this worked, it was a manual process, and DNS propagation delays meant the switch wasn't instantaneous.
+    p I wanted to automate this failover process using Cloudflare Workers. Since Workers execute at the edge before DNS resolution, they can intercept requests, check the primary server's response, and route traffic accordingly. My goal was to check if the main server is healthy, and if not, automatically fallback to the secondary server.
+    p It is important to note that this is not an HTTP redirect. The Cloudflare Worker intercepts the request and proxies it to the appropriate upstream server transparently.
+
+    h2 Instructions
+    ol
+        li <strong>DNS:</strong> Create proxied A records for <code>api.example.com</code> and <code>api2.example.com</code> pointing to their respective origins.
+        li <strong>Worker:</strong> Create a new worker and deploy the script below.
+        li <strong>Route:</strong> Add a route for <code>api.example.com/*</code> pointing to the worker (Failure mode: Fail open).
+
+    div.shadow-sm 
+        pre.line-numbers
+            code.language-javascript.
+                export default {
+                    async fetch(request) {
+                        const primaryUrl = 'https://api.example.com';
+                        const fallbackUrl = 'https://api2.example.com';
+
+                        const url = new URL(request.url);
+                        const path = url.pathname + url.search;
+
+                        // Try primary
+                        try {
+                            const response = await fetch(primaryUrl + path, request);
+
+                            // If origin responds with a redirect (301/302), return it
+                            if ([301, 302].includes(response.status)) {
+                                return new Response(null, {
+                                    status: response.status,
+                                    headers: { 'Location': response.headers.get('Location') }
+                                });
+                            }
+
+                            // Otherwise, return normal response
+                            if (response.ok) {
+                                return response;
+                            }
+                        } catch (e) {
+                            console.error('Primary failed:', e);
+                        }
+
+                        // Fallback: try the same logic on secondary
+                        try {
+                            const response = await fetch(fallbackUrl + path, request);
+                            if ([301, 302].includes(response.status)) {
+                                return new Response(null, {
+                                    status: response.status,
+                                    headers: { 'Location': response.headers.get('Location') }
+                                });
+                            }
+                            return response;
+                        } catch (e) {
+                            console.error('Fallback failed:', e);
+                        }
+
+                        return new Response('Service unavailable', { status: 503 });
+                    }
+                };
+
+    h2 Conclusion
+    p That's it! Once the DNS entries are configured and the Worker is deployed, the failover logic operates automatically at the edge. This setup ensures that if your primary server goes down or needs maintenance, traffic is instantly routed to the backup server without any manual intervention or DNS propagation delays.
+    
