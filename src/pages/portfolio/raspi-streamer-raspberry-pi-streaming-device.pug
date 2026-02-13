@@ -11,9 +11,6 @@ block title
     | Teklynk - #{title}
 
 block content
-    ul.list-inline
-        each skill in skills.sort()
-            li.list-inline-item.badge.bg-secondary.shadow-sm.p-2.m-1.fs-6= skill
     
     p Raspi-Streamer is a comprehensive streaming solution that turns a Raspberry Pi into a standalone broadcasting device. It enables seamless RTMP streaming to platforms like Twitch, YouTube, and Owncast using a USB capture card for HDMI input. The system includes a responsive Web UI built with Flask, allowing users to control streams, manage recordings, and configure settings remotely from any browser. Comparable to professional broadcasting hardware, it offers features like audio synchronization with ALSA, automated service management, and network file access via Samba, making it an ideal, cost-effective tool for live events, gameplay, and conferences.
     .row

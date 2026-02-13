@@ -11,10 +11,6 @@ block title
     | Teklynk - #{title}
 
 block content
-    ul.list-inline
-        
-        each skill in skills.sort()
-            li.list-inline-item.badge.bg-secondary.shadow-sm.p-2.m-1.fs-6= skill
     
     p This project implements a self-hosted Twitch API gateway that simplifies data access by requiring only a channel name, effectively acting as a public proxy to Twitch's API. It is designed for developers building custom tools who wish to avoid managing client IDs and authentication tokens directly in their applications; the service handles token lifecycle automatically, refreshing credentials daily. Built on a lightweight stack using PHP and Nginx without the need for a database, it supports Docker for easy deployment and is optimized for use behind Cloudflare to leverage proxying, DDoS protection, and rate limiting. The system operates via simple GET requests and includes advanced filtering capabilities, such as retrieving featured clips.
 

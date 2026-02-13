@@ -11,9 +11,6 @@ block title
     | Teklynk - #{title}
 
 block content
-    ul.list-inline
-        each skill in skills.sort()
-            li.list-inline-item.badge.bg-secondary.shadow-sm.p-2.m-1.fs-6= skill
     
     p This project began as a custom WordPress child theme and evolved into a high-performance, secure static website. The initial transition involved a static-site export plugin to harden security by eliminating dynamic PHP execution. Subsequently, I engineered a bespoke Static-Site Generator (SSG) from the ground up, leveraging Pug for powerful templating and Vite.js for rapid bundling. A key innovation was a custom Vite plugin that automatically parses the event schedule from a CSV file, rendering it into responsive HTML tables and enabling organizers to update the agenda by simply dropping in a new file. This modern stack resulted in a significant reduction in page-load times and eliminated server-side vulnerabilities, with the final site deployed on a scalable architecture using Cloudflare's CDN for global caching and performance.
 
