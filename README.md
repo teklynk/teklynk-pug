@@ -13,6 +13,8 @@ Simply configure your deployment provider to serve the dist directory after runn
 - **Pug**: Robust template engine for Node.js.
 - **i18n Support**: Multi-language support via `vite-plugin-pug-i18n`.
 - **RSS Feed**: Includes RSS feed generation.
+- **Blog List Page**: `/blog/` lists all blog posts with a search filter option.
+- **Portfolio Page**: `/portfolio/` Displays all portfolio pages.
 - **Cross-Platform Scripts**: Uses `cross-env` to ensure scripts run on Windows and POSIX systems.
 - **Supports**: Layouts, includes, variables, scss, template logic, plugins, multiple pages.
 
