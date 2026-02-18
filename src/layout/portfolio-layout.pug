@@ -13,9 +13,9 @@ html(lang='en-us')
                 .container.pb-3.pt-3
                     if title
                         h1.underline #{title}
-                    if skills || gitHubUrl
+                    if (skills && skills.length > 0) || gitHubUrl
                         .d-flex.justify-content-between.align-items-center.flex-wrap
-                            if skills
+                            if skills && skills.length > 0
                                 ul.list-inline
                                     each skill in skills.sort()
                                         li.list-inline-item.badge.bg-secondary.shadow-sm.p-2.m-1.fs-6= skill

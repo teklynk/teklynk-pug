@@ -1,0 +1,32 @@
+extends ../layout/page-layout.pug
+
+block title
+    - var date = ""
+    - var title = "Support"
+    - var description = "Web Developer | Full Stack Developer | Linux user | Crafting innovative solutions through web development and hands-on tinkering."
+    - var thumbnail = ""
+    - var pageUrl = "https://www.teklynk.com/support"
+    - var skills = []
+    | Teklynk - Support
+
+block content
+
+    p If you enjoy some of the projects that I have developed, please consider donating. It helps support the online infrastructure that powers these projects.
+
+    ul.list-inline.list-group-flush
+        li
+            a(href="https://ko-fi.com/teklynk", target="_blank", rel="noopener noreferrer")
+                i.fa-solid.fa-mug-hot.me-2
+                | Support me on Ko-fi
+        li
+            a(href="https://github.com/sponsors/teklynk", target="_blank", rel="noopener noreferrer")
+                i.fa-brands.fa-github.me-2
+                | Support me on GitHub
+        li
+            a(href="https://liberapay.com/teklynkliberapay/donate", target="_blank", rel="noopener noreferrer")
+                i.fa-solid.fa-hand-holding-heart.me-2
+                | Support me on Liberapay
+        li
+            a(href="https://www.paypal.com/donate/?hosted_button_id=UVKZUYFMXQDPL", target="_blank", rel="noopener noreferrer")
+                i.fa-brands.fa-paypal.me-2
+                | Support me on PayPal
