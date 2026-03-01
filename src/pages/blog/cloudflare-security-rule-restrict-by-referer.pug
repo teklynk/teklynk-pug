@@ -1,0 +1,40 @@
+extends ../../layout/blog-layout.pug
+
+block title
+    - var date = "2026-03-01"
+    - var title = "Secure Your API: Restrict Access by Referer with Cloudflare"
+    - var description = "Learn how to create a Cloudflare security rule to protect your API from abuse by allowing requests only from specific, whitelisted domains."
+    - var thumbnail = "/assets/images/Screenshot from 2026-03-01 02-36-54.png"
+    - var pageUrl = "https://www.teklynk.com/blog/cloudflare-security-rule-restrict-by-referer"
+    - var gitHubUrl = ""
+    - var skills = []
+    | Teklynk - #{title}
+
+block content
+
+    p I run a public API that occasionally gets overwhelmed by high traffic from users misusing it. This prompted me to find a way to restrict access to certain endpoints, ensuring only legitimate requests from specific domains can get through.
+    p In this tutorial, I'll show you how to set up a Cloudflare security rule to protect your API by limiting access based on the referring domain.
+   
+    h2 Setting Up the Rule
+    p To get started, go to your Cloudflare dashboard and navigate to "Security > Security rules". Click "Create rule", give it a descriptive name like "Referer Access", and then click "Edit expression" to enter the rule manually. I find this is often faster than using the visual builder.
+    p Copy and adapt the following expression for your specific needs:
+    div.shadow-sm.mb-4  
+        pre.line-numbers
+            code.language-regex.
+                http.host in {"api.example.com"}
+                and (
+                    http.request.uri.path contains "/getusers.php"
+                    or http.request.uri.path contains "/getlocations.php"
+                )
+                and not (
+                    http.referer contains "example.com"
+                    or http.referer contains "sample.com"
+                    or http.referer contains "mywebsite.com"
+                    or http.referer contains "account.mywebsite.com"
+                )
+    h2 How It Works
+    p This expression tells Cloudflare to block any request to `api.example.com` for the specified URI paths (`/getusers.php` or `/getlocations.php`) if the `Referer` header does NOT come from one of your whitelisted domains.
+    p Set "Then take action…" to "Block".
+    p When a request is blocked, the user sees a Cloudflare error page, and the traffic never hits your origin server. This is a powerful way to mitigate abuse, save bandwidth, and reduce server load.
+    p **Disclaimer: Please be aware that this method is not 100% foolproof. The `Referer` header can be spoofed (faked) by knowledgeable users or scripts. However, for preventing general misuse and hotlinking, this rule is a valuable addition to your security toolkit.
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/Screenshot from 2026-03-01 02-36-54.png", alt="")
