@@ -13,20 +13,28 @@ block content
 
     p If you enjoy some of the projects that I have developed, please consider donating. It helps support the online infrastructure that powers these projects.
 
-    ul.list-inline.list-group-flush
-        li
-            a(href="https://ko-fi.com/teklynk", target="_blank", rel="noopener noreferrer")
-                i.fa-solid.fa-mug-hot.me-2
-                | Support me on Ko-fi
-        li
-            a(href="https://github.com/sponsors/teklynk", target="_blank", rel="noopener noreferrer")
-                i.fa-brands.fa-github.me-2
-                | Support me on GitHub
-        li
-            a(href="https://liberapay.com/teklynkliberapay/donate", target="_blank", rel="noopener noreferrer")
-                i.fa-solid.fa-hand-holding-heart.me-2
-                | Support me on Liberapay
-        li
-            a(href="https://www.paypal.com/donate/?hosted_button_id=UVKZUYFMXQDPL", target="_blank", rel="noopener noreferrer")
-                i.fa-brands.fa-paypal.me-2
-                | Support me on PayPal
+    .row.row-cols-1.row-cols-md-2.row-cols-lg-4.g-4.mt-3
+        .col
+            .card.h-100.text-center.shadow-sm
+                .card-body.d-flex.flex-column.justify-content-center.align-items-center
+                    i.fa-solid.fa-mug-hot.fa-3x.mb-3.text-danger
+                    h5.card-title Support me on Ko-fi
+                    a.stretched-link(href="https://ko-fi.com/teklynk", target="_blank", rel="noopener noreferrer")
+        .col
+            .card.h-100.text-center.shadow-sm.bg-dark
+                .card-body.d-flex.flex-column.justify-content-center.align-items-center
+                    i.fa-brands.fa-github.fa-3x.mb-3.text-white
+                    h5.card-title.text-white Support me on GitHub
+                    a.stretched-link(href="https://github.com/sponsors/teklynk", target="_blank", rel="noopener noreferrer")
+        .col
+            .card.h-100.text-center.shadow-sm
+                .card-body.d-flex.flex-column.justify-content-center.align-items-center
+                    i.fa-solid.fa-hand-holding-heart.fa-3x.mb-3.text-warning
+                    h5.card-title Support me on Liberapay
+                    a.stretched-link(href="https://liberapay.com/teklynkliberapay/donate", target="_blank", rel="noopener noreferrer")
+        .col
+            .card.h-100.text-center.shadow-sm
+                .card-body.d-flex.flex-column.justify-content-center.align-items-center
+                    i.fa-brands.fa-paypal.fa-3x.mb-3.text-primary
+                    h5.card-title Support me on PayPal
+                    a.stretched-link(href="https://www.paypal.com/donate/?hosted_button_id=UVKZUYFMXQDPL", target="_blank", rel="noopener noreferrer")
