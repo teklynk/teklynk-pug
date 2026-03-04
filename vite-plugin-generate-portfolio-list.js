@@ -49,30 +49,31 @@ function generateList() {
     // Sort links by date using moment for date comparison
     links.sort((a, b) => moment(b.date).diff(moment(a.date)));
 
-    let pugContent = `
-.row
-    `;
+    let pugContent = ``;
 
     // Generate content for all portfolio items
-    for (const { date, title, description, thumbnail, fileName, gitHubUrl, skills } of links) {
+    for (const { title, description, thumbnail, fileName, gitHubUrl, skills } of links) {
         let skillsHtml = '';
         if (Array.isArray(skills) && skills.length > 0) {
             skillsHtml = `ul.list-inline\n` + skills.sort().map(skill => `                    li.list-inline-item.badge.bg-secondary-dark.shadow-sm.p-2.m-1.fs-6 ${skill}`).join('\n');
         }
 
-        pugContent += ` 
-    .col-md-6.col-lg-4.mb-4
-        .card.h-100.shadow-sm
-            ${thumbnail ? `a.hover-zoom(href="/portfolio/${fileName}.html")
-                img.card-img-top(src="${thumbnail}" alt="${title}")` : ''}
+        pugContent += `
+.card.mb-4.shadow-sm.overflow-hidden
+    .row.g-0
+${thumbnail ? `        .col-md-4
+            a.hover-zoom.d-block.h-100(href="/portfolio/${fileName}.html" aria-label="${title}")
+                img(src="${thumbnail}" alt="${title}")
+` : ''}
+        .col-md-${thumbnail ? '8' : '12'}
             .card-body
                 h2.card-title.mt-0 ${title}
                 p.card-text ${description}
                 ${skillsHtml}
-            .card-footer.d-flex.justify-content-between.align-items-center.h-40px
+            .card-footer.bg-transparent.border-top-0.pt-0.pb-3.d-flex.justify-content-between.align-items-center
                 a.btn.btn-link.p-0.m-0(href="/portfolio/${fileName}.html", target="_self") Read More
                 ${gitHubUrl ? `a.p-0.m-0.fs-4(href="${gitHubUrl}", target="_blank", title="Check it out on GitHub"): i.fab.fa-github` : ''}
-        `;
+`;
     }
 
     fs.writeFileSync(resolve(includesPath, 'portfolio-index.pug'), pugContent.trim());
