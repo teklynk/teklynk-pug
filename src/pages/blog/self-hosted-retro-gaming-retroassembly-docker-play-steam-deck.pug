@@ -1,0 +1,123 @@
+extends ../../layout/blog-layout.pug
+
+block title
+    - var date = "2026-05-12"
+    - var title = "Self-Hosted Retro Gaming: RetroAssembly via Docker. Play your retro game collection on your Steam Deck"
+    - var description = "Learn how to self-host your retro game collection using RetroAssembly in Docker and integrate it seamlessly with your Steam Deck's Gaming Mode."
+    - var thumbnail = "https://www.teklynk.com/assets/images/retroassembly-blog-socials.jpg"
+    - var pageUrl = "https://www.teklynk.com/blog/retroaseembly-from-docker-to-steam-deck"
+    - var gitHubUrl = ""
+    - var skills = []
+    | Teklynk - #{title}
+
+block content
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/retroassembly-blog-socials.jpg", alt="Steam Deck with the RetroAssembly web app open and running")
+
+    p I recently discovered #[a(href="https://retroassembly.com/", target="_blank") RetroAssembly], a self-hosted retro game emulator that runs entirely in a web browser. It features game saves and supports multiple accounts. Perfect for families where every user wants their own progression.
+    p Deploying RetroAssembly on my home server via Docker was a easy. The official site provides documentation and a `compose.yaml` example, which I was able to adapt to my environment.
+    p In this post, I'll walk you through setting up RetroAssembly using Docker, highlight some of its features, and show you how to optimize the experience on a Steam Deck using a custom bash script, kiosk mode, and a dedicated browser profile.
+
+    p This tutorial assumes you have a functional Docker environment and are comfortable using the command line.
+
+    p First, create a dedicated directory for the project and navigate into it:
+    p #[code mkdir -p ~/docker/retroassembly && cd ~/docker/retroassembly]
+
+    p Next, create a #[code docker-compose.yml] file using your preferred text editor and add the following configuration:
+
+    div.shadow-sm 
+        pre.line-numbers
+            code.language-yaml.
+                services:
+                    retroassembly:
+                        image: arianrhodsandlot/retroassembly
+                        ports: [8088:8000]
+                        volumes: [/var/lib/docker/volumes/retroassembly/_data:/app/data]
+                        restart: unless-stopped
+
+    ul 
+        li #[strong Volumes:] The path #[code /var/lib/docker/volumes/retroassembly/_data] ensures your game data and library metadata persist between container updates. Adjust this to a persistent path on your host.
+        li #[strong Ports:] I mapped host port #[code 8088] to container port #[code 8000]. You will use this port to access the web interface.
+
+    p With the file saved, launch the service in detached mode:
+    p #[code docker compose up -d]
+
+    p Once the container is active, you can access the web interface at #[code http://your-server-ip:8088/].
+
+    p On your first visit, you will be prompted to create a username and password.
+
+    p The RetroAssembly UI comes with several consoles enabled by default. You can manage your library by clicking the #[strong settings icon] in the lower-left corner and navigating to the #[strong Library] tab.
+
+    p To add games, simply select a console from the left menu and click the #[strong Add] button. This allows you to upload ROMs directly through the web UI, which is much more convenient than manually organizing directories and file permissions on the server backend as required by many other emulator front-ends.
+
+    p Once your ROMs are uploaded, RetroAssembly automatically fetches metadata, including box art, game descriptions, and even YouTube gameplay previews. This data is pulled dynamically from libretro.com, so it doesn't consume extra storage on your server.
+
+    p A few personal preferences: In #[strong Settings > Inputs], I set the controller layout to #[strong Xbox Style] for better compatibility with most gamepads. I also enabled the #[strong crt-easymode] shader under #[strong Settings > Emulating > Video] to give games a retro CRT look.
+
+    p To set up separate accounts for friends or family, you can manage and add new users under the #[strong Settings > General] tab.
+
+    h2 Adding RetroAssembly as a non-steam game on the Steam Deck 
+    
+    p Adding a web app as a "Non-Steam Game" is a way to integrate external tools and apps into your Steam Deck library. This provides full controller support and allows you to launch the app directly from Gaming Mode. Since we are using the Brave Flatpak, we'll need a small wrapper script to bridge the gap between Steam and the Flatpak environment.
+
+    p Here is the step-by-step process to set up a dedicated kiosk-style launcher for your local retro library:
+
+    p Step 1: Create a bash Script
+    
+    p First, we need a script that Steam can execute to launch a specific instance of the Brave browser.
+
+    ul 
+        li Switch to #[strong Desktop Mode] on your Steam Deck.
+        li Open the #[strong Dolphin] file manager.
+        li Navigate to your home directory: #[code /home/deck].
+        li Create a new folder named #[code scripts] (if it doesn't exist).
+
+    p Inside that folder, create a new text file named #[code retroassembly-kiosk.sh].
+
+    p Right-click the file, select #[strong Open With], and choose #[strong Kate] (or your preferred text editor).
+
+    p Paste the following content into the file:
+
+    div.shadow-sm 
+            pre.line-numbers
+                code.language-bash.
+                    #!/bin/bash
+                    # Launch Brave in Kiosk mode via Flatpak
+                    flatpak run com.brave.Browser --kiosk --window-size=1280,800 --user-data-dir=/tmp/retroassembly-profile http://your-server-ip:8088/library
+
+    p The #[code --user-data-dir] flag is optional but recommended; it creates a dedicated browser profile, keeping your RetroAssembly session and settings isolated from your primary browsing data.
+
+    p After saving the file and closing the editor, you must make the script executable:
+
+    ol 
+        li Right-click #[code retroassembly-kiosk.sh] and select #[strong Properties].
+        li Navigate to the #[strong Permissions] tab.
+        li Check the box labeled #[strong Is executable].
+        li Close the properties window. 
+
+    h2 Add to Steam Library
+    p Finally, we need to add the script to your Steam library so it can be launched directly from Gaming Mode.
+
+    ol
+        li Open the #[strong Steam] client while still in Desktop Mode.
+        li Click #[strong Games] in the top menu bar and select #[strong Add a Non-Steam Game to My Library...].
+        li In the window that appears, click the #[strong Browse...] button at the bottom.
+        li Navigate to #[code /home/deck/scripts/].
+        li Select #[code retroassembly-kiosk.sh] and click #[strong Open].
+        li Ensure the script is checked in the list and click #[strong Add Selected Programs].
+
+    h2 Configure Launch Options
+    p To ensure the best performance and input reliability, I recommend disabling the Steam Overlay for this specific shortcut:
+    ol
+        li Switch back to #[strong Gaming Mode].
+        li Locate the #[strong retroassembly-kiosk.sh] entry in your library.
+        li Press the #[strong Menu button] (the button with three horizontal lines).
+        li Navigate to #[strong Properties > General].
+        li Toggle off #[strong Enable the Steam Overlay while in-game].
+
+    p #[strong Note:] Disabling the overlay prevents potential focus issues and ensures that the browser in kiosk mode captures your controller inputs without interference.
+
+    h2 Launch and Test
+    p Return to #[strong Gaming Mode] and launch your new RetroAssembly shortcut. The application should open immediately in full-screen kiosk mode, connecting directly to your server.
+    p Since the Steam Deck's native resolution is 1280x800, the #[code --window-size] flag we included in the script ensures the interface renders perfectly without any scaling artifacts or letterboxing.
+
+    p Your setup is now complete. You can launch RetroAssembly from any browser, giving you a seamless, console-like experience for your self-hosted game collection. RetroAssembly also has a nice mobile experience with on-screen buttons. Try it from your phone or anything that has a web browser.
