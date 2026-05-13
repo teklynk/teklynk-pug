@@ -51,9 +51,13 @@ block content
 
     p Once your ROMs are uploaded, RetroAssembly automatically fetches metadata, including box art, game descriptions, and even YouTube gameplay previews. This data is pulled dynamically from libretro.com, so it doesn't consume extra storage on your server.
 
-    p A few personal preferences: In #[strong Settings > Inputs], I set the controller layout to #[strong Xbox Style] for better compatibility with most gamepads. I also enabled the #[strong crt-easymode] shader under #[strong Settings > Emulating > Video] to give games a retro CRT look.
+    p For a better experience, I have a few personal preferences: In #[strong Settings > Inputs], I set the controller layout to #[strong Xbox Style] for broad gamepad compatibility. Under #[strong Settings > Emulating > Video], I enabled the #[strong crt-easymode] shader for that classic CRT look and turned on #[strong Go fullscreen on launch].
 
-    p To set up separate accounts for friends or family, you can manage and add new users under the #[strong Settings > General] tab.
+    p RetroAssembly also supports multiple profiles. You can create and manage separate accounts for friends or family under the #[strong Settings > General] tab, ensuring everyone has their own dedicated save files and progress.
+
+    p During gameplay, pressing the #[code LB + RB] bumpers together opens a menu overlay. This allows you to create save states, load previous progress, or jump back to your library on the fly.
+
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/retroassembly-screenshot-2026-05-13-18-16-32.jpg", alt="Screenshot of RetroAssembly overlay showing previous game saves and save on the fly")
 
     h2 Adding RetroAssembly as a non-steam game on the Steam Deck 
     
@@ -63,7 +67,7 @@ block content
 
     h2 Create a bash Script
     
-    p First, we need a script that Steam can execute to launch a specific instance of the Brave browser.
+    p First, we need a script that Steam can execute to launch a instance of the Brave browser.
 
     ul 
         li Switch to #[strong Desktop Mode] on your Steam Deck.
