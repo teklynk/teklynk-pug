@@ -1,0 +1,62 @@
+extends ../../layout/blog-layout.pug
+
+block title
+    - var date = "2026-06-11"
+    - var title = "How to Nuke Your Gmail and Forward Messages to Proton"
+    - var description = "Learn how to migrate from Gmail to Proton Mail, set up automatic forwarding, and keep your Gmail clean."
+    - var thumbnail = "https://www.teklynk.com/assets/images/gmailnuketrash.jpg"
+    - var pageUrl = "https://www.teklynk.com/blog/how-to-nuke-your-gmail-and-forward-messages-to-proton"
+    - var gitHubUrl = ""
+    - var skills = []
+    | Teklynk - #{title}
+
+block content
+    p I recently switched to Proton Mail and migrated my existing messages over. This transition involved updating several online accounts with my new address. Once the migration was finished, I deleted all data from my Gmail account, including Sent, Spam, Junk, and Trash, since my emails were now safely imported and stored in Proton. Over the following months, I found that most incoming Gmail messages were either spam or newsletters that I quickly unsubscribed from. To ensure I don't miss the occasional legitimate message, I configured Gmail to forward all incoming mail to my Proton account.
+    p To set this up, I navigated to Gmail #[strong Settings > See all settings > Forwarding and POP/IMAP] and selected the option to #[strong "Forward a copy of incoming mail to"] my Proton email address, then chose #[strong "delete Gmail's copy"] from the dropdown menu.
+    p While this works well, there is a catch: when Gmail "deletes" a message after forwarding, it actually moves it to the Trash folder where it sits for 30 days. To keep my old account truly empty, I wanted to find a way to bypass the Trash and permanently delete those forwarded messages immediately.
+    
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/gmail-proton-2026-06-11 20-38-54.jpg", alt="")
+    
+    p This led me to #[a(href="https://developers.google.com/apps-script/", target="_blank") Google Apps Script]. It is a cloud-based JavaScript platform powered by Google Drive that allows you to integrate with and automate tasks across Google products, which was exactly what I needed.
+    p I navigated to the #[a(href="https://script.google.com/home", target="_blank") Apps Script dashboard] and clicked #[strong New Project]. I named the project #[strong GmailNukeTrash], then clicked #[strong Services] and selected the #[strong Gmail API]. I set the Identifier to #[strong GmailAPI] and clicked #[strong Add]. With these settings, the script has permission to interact with the Gmail account, enabling automation via custom triggers or time-based intervals.
+    p We are now ready to create the script that will monitor and permanently purge your Spam, Junk, and Trash folders.
+    p Inside the #[strong Editor] tab, replace any existing placeholder code with the following function: 
+
+    div.shadow-sm.mb-4
+        pre.line-numbers
+            code.language-javascript.
+                function GmailNukeTrash() {
+                    const userEmail = 'me';
+
+                    // Clean Spam
+                    const spamThreads = GmailApp.search("label:Spam");
+                    spamThreads.forEach(thread => GmailAPI.Users.Threads.remove(userEmail, thread.getId()));
+                    Logger.log("Nuked " + spamThreads.length + " spam threads.");
+
+                    // Clean Junk
+                    const junkThreads = GmailApp.search("label:Junk");
+                    junkThreads.forEach(thread => GmailAPI.Users.Threads.remove(userEmail, thread.getId()));
+                    Logger.log("Nuked " + junkThreads.length + " junk threads.");
+                    
+                    // Clean Trash
+                    const trashThreads = GmailApp.getTrashThreads();
+                    trashThreads.forEach(thread => GmailAPI.Users.Threads.remove(userEmail, thread.getId()));
+                    Logger.log("Nuked " + trashThreads.length + " trash threads.");
+                }
+
+    p This script leverages the #[code GmailAPI.Users.Threads.remove()] method to immediately purge messages. While this version targets specific labels, it is easily customizable if you wish to include other folders.
+    p The final step is to automate the execution. To do this, expand the left sidebar, select #[strong Triggers], and then click #[strong Add Trigger] to open the configuration menu. 
+    
+    ol
+        li Choose #[strong GmailNukeTrash] as the function to run.
+        li Set the event source to #[strong Time-driven].
+        li Select #[strong Minutes timer] as the type of time-based trigger.
+        li Set the minute interval to #[strong Every minute].
+
+    img.img-fluid.mb-4.shadow-sm(src="/assets/images/gmail-proton-2026-06-11 21-20-24.jpg", alt="")
+
+    p With the trigger active, the script will run automatically every minute to purge any messages appearing in your #[strong Spam], #[strong Junk], or #[strong Trash] folders.
+    p To test the setup, send an email from your Proton account to your Gmail address. The message should be forwarded back to your Proton inbox. If you monitor your Gmail Trash folder, the message might be visible briefly before the next script execution permanently removes it.
+    p That is it. Your Gmail account will now remain completely empty, ensuring no residual data or old emails exist.
+
+    p I recommend implementing this automation only after you have #[strong successfully migrated your data] to Proton and updated your online accounts with your new address. It is also wise to #[strong monitor your Gmail activity] for a few months before enabling the auto-purge. This grace period allows you to unsubscribe from newsletters and identify any forgotten accounts that still use your old address. If you receive an email from a service you missed, take a moment to update your profile settings immediately to ensure a seamless transition.
