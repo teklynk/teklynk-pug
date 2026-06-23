@@ -61,13 +61,13 @@ block content
 
     h2 Adding RetroAssembly as a non-steam game on the Steam Deck 
     
-    p Adding a web app as a "Non-Steam Game" is a way to integrate external tools and apps into your Steam Deck library. This provides full controller support and allows you to launch the app directly from Gaming Mode. Since we are using the Brave Flatpak, we'll need a small wrapper script to bridge the gap between Steam and the Flatpak environment.
+    p Adding a web app as a "Non-Steam Game" is a way to integrate external tools and apps into your Steam Deck library. This provides full controller support and allows you to launch the app directly from Gaming Mode. Since we are using the Chromium Flatpak, we'll need a small wrapper script to bridge the gap between Steam and the Flatpak environment.
 
     p Here is the step-by-step process to set up a dedicated kiosk-style launcher for your local retro library:
 
     h2 Create a bash Script
     
-    p First, we need a script that Steam can execute to launch a instance of the Brave browser.
+    p First, we need a script that Steam can execute to launch a instance of the Chromium browser.
 
     ul 
         li Switch to #[strong Desktop Mode] on your Steam Deck.
@@ -79,14 +79,24 @@ block content
 
     p Right-click the file, select #[strong Open With], and choose #[strong Kate] (or your preferred text editor).
 
-    p Paste the following content into the file:
+    p Paste the following content into the file: (This example uses the Chromium Browser)
 
     div.shadow-sm 
             pre.line-numbers
                 code.language-bash.
                     #!/bin/bash
-                    # Launch Brave in Kiosk mode via Flatpak
-                    flatpak run com.brave.Browser --kiosk --window-size=1280,800 http://your-server-ip:8088/library
+
+                    # Flatpak application
+                    FLATPAK_APP="org.chromium.Chromium"
+
+                    # Kill existing instance of (FLATPAK_APP)
+                    flatpak kill "$FLATPAK_APP" 2>/dev/null
+
+                    # Set Flatpak user permissions
+                    flatpak override --user --filesystem=/run/udev:ro "$FLATPAK_APP"
+
+                    # Launch Chromium with arguments
+                    flatpak run "$FLATPAK_APP" --app="http://your-server-ip:8088/library" --kiosk --no-first-run --noerrdialogs
 
     p After saving the file and closing the editor, you must make the script executable:
 
