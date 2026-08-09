@@ -16,41 +16,36 @@ block content
 
     h2 The Story
 
-    p I used Amazon Fire TV sticks on all my TVs for years. They worked, but the ads, tracking, recommendations, and clutter got old. I only used a handful of apps, while the interface was full of content I didn't need.
-    p I also had privacy concerns because Fire TV required an Amazon account. I tried to block as much as possible with Pi-Hole and later used Proton VPN with NetShield.
-    p In the end, I wanted a much simpler experience: a UI that showed only the apps I use and a few useful settings.
-    p A few years ago, I found five 2011 Mac Minis on eBay during the Raspberry Pi shortage. The older Mac Minis were even cheaper than a Pi at the time.
-    p That stack of Mac Minis made me wonder whether they could become basic media-center PCs. They are older Intel i5 machines with Intel graphics and only output 1080p, but that is enough for the use case.
-    p I decided to build a Python/Flask web app that starts on boot and presents a custom Smart TV-style UI in fullscreen kiosk mode.
-    p I chose Debian with XFCE because it is lightweight and flexible enough for the tweaks I wanted.
-    p As a web developer, I used Python for the backend and Flask for the frontend, which let me build the UI using JavaScript, CSS, and JSON configuration files.
-    p While researching the idea, I found several Linux desktop apps aimed at media-center PCs, such as Plex HTPC edition, Jellyfin Desktop, Kodi, and VacuumTube. VacuumTube is a desktop clone of the Android/Smart TV YouTube app, and all of these run fullscreen and work with keyboard navigation.
-    
+    p I used Amazon Fire TV sticks on all my TVs for years. They worked, but the ads, tracking, recommendations, and clutter grew annoying. I only used a handful of apps and had privacy concerns because Fire TV required an Amazon account.
+    p I found five 2011 Mac Minis on eBay during the Raspberry Pi shortage and decided to repurpose them as basic media-center PCs. They are older Intel i5 machines that output 1080p—good enough for this use case.
+    p I built a Python/Flask web app that starts on boot and presents a custom Smart TV-style UI in fullscreen kiosk mode. I chose Debian with XFCE because it's lightweight and flexible for the tweaks I wanted.
+    p As a web developer, I used Flask for the frontend so the UI could be built with JavaScript, CSS, and JSON configuration files. Several Linux media-center apps exist (Plex HTPC, Jellyfin Desktop, Kodi, VacuumTube), but I wanted a single curated home screen with only the apps and tools I use.
+
     h2 The Concept
 
-    p On boot, a bash script starts the Python/Flask app and opens http://localhost:8080 in a browser with #[code --kiosk]. Running it as a web app lets me assign a #[code --name] and track its process ID. I also set each website to launch as its own web app so it gets its own #[strong .config] directory, stays sandboxed, and behaves more like a desktop application.
-    p Native desktop apps such as Plex and VacuumTube launch with commands like #[code flatpak run rocks.shy.VacuumTube --fullscreen]. I chose Flatpak apps because they are easy to install, sandboxed, and consistent across machines.
-    p Tools and settings open like desktop apps, with their icons placed in the top-right corner of the UI. These buttons launch things like #[code xfce4-settings-manager], #[code xfce4-session-logout], Bluetooth settings, Network Manager, and whatever else I need.
-    p The UI can be navigated with arrow keys or Tab / Shift+Tab, so I can use a wireless PC remote such as the #[a(href="https://www.amazon.com/s?k=MX3+Pro+Remote+Control", target="_blank") MX3 Pro, 2.4G Backlit Mini Wireless Keyboard &amp; Infrared Remote].
-    p I also wanted to see how far I could strip down XFCE without breaking the system, but first I needed the Python app to launch on boot in a stock Debian/XFCE setup.
+    p On boot, a bash script starts the Flask app and opens http://localhost:8080 in a browser with #[code --kiosk]. I run each site as its own web app (using #[code --name]) so it gets its own #[strong .config] directory and behaves more like a desktop application.
+    p Native desktop apps launch with commands like #[code flatpak run rocks.shy.VacuumTube --fullscreen]. I prefer Flatpak for sandboxing and consistency across machines.
+    p Tools and settings appear as icons in the top-right corner and launch things like #[code xfce4-settings-manager], #[code xfce4-session-logout], Bluetooth settings, Network Manager, and audio controls.
+    p The UI is keyboard-navigable (arrow keys, Tab/Shift+Tab), so a wireless PC remote such as the #[a(href="https://www.amazon.com/s?k=MX3+Pro+Remote+Control", target="_blank") MX3 Pro] works well.
 
     h2 The Process
 
-    p Installing Debian was straightforward. I chose XFCE during setup, enabled SSH, and left other desktop environments unchecked. On the 2011 Mac Minis, I also installed non-free firmware packages for Wi-Fi and Bluetooth so the hardware would work reliably.
-    p After install, I added the non-free and non-free-firmware repositories, then installed the browser, Flatpak, and kiosk utilities: #[code xdotool], #[code wmctrl], #[code unclutter], #[code input-remapper], #[code network-manager], #[code bluez], #[code pavucontrol], and other helpers.
-    p I installed Brave Origin, enabled Flathub in Flatpak, then installed the dashboard apps I wanted: Plex, Jellyfin Desktop, Kodi, VacuumTube, and a few supporting tools.
-    p The Smart Dashboard itself came from the #[strong smart-dashboard] repository. I cloned it, created a Python virtual environment, installed the requirements, and used #[code run.sh] to start the Flask server and launch Brave in kiosk mode.
-    p I configured the system so the dashboard starts automatically on login. LightDM auto-logs my user in, and I added #[code run_always.sh] to XFCE Session and Startup so the dashboard opens full screen after each boot.
-    p To keep the experience clean, I disabled XFCE panel autostart, turned off screen blanking with #[code xset -dpms s off], and saved a minimal session. I also removed #[code xfce4-desktop] and replaced it with a dummy #[strong xfce4-desktop] executable, so no desktop shows. That keeps the dashboard as the home screen, and closing an app returns me to the same fullscreen interface.
-    p I removed the default XFCE keyboard shortcuts, set workspaces to #[strong 1], made HDMI audio the default output, and removed unnecessary startup apps.
-    p The #[code server.py] script disables right-click menus for web apps. Since web apps run in kiosk mode, users cannot escape fullscreen.
-    p The #[code run_always.sh] script relaunches the dashboard after three seconds if it closes. A confirmation dialog appears when the user tries to close the dashboard with Alt+F4. Either way, the dashboard relaunches and stays available.
-    p The dashboard uses JSON files for configuration, so I can define apps, tools, and weather by editing #[strong apps.json], #[strong tools.json], and #[strong weather.json]. Wallpaper images added to #[strong static/backgrounds/] are discovered automatically and randomly rotate with a dissolve effect, giving it a more Smart TV-like feel.
+    p I installed Debian with XFCE, enabled SSH, and added the non-free and non-free-firmware repositories for Wi‑Fi and Bluetooth support on the older Mac Minis.
+    p I installed the browser, Flatpak, and kiosk utilities like #[code xdotool], #[code wmctrl], #[code unclutter], #[code input-remapper], #[code network-manager], #[code bluez], and #[code pavucontrol].
+    p I enabled Flathub, installed the dashboard apps I wanted (Plex, Jellyfin Desktop, Kodi, VacuumTube), cloned the smart-dashboard repository, created a Python virtual environment, installed requirements, and used #[code run.sh] to start the Flask server and launch Brave in kiosk mode.
+    p LightDM auto-logs my user in and I add #[code run_always.sh] to XFCE Session and Startup so the dashboard opens on boot. That script relaunches the dashboard after a short delay if it exits, and a confirmation dialog appears when trying to close it with Alt+F4.
+    p To keep the experience clean I disabled XFCE panel autostart, turned off screen blanking with #[code xset -dpms s off], saved a minimal session, and replaced #[strong xfce4-desktop] with a dummy executable so no desktop icons appear. I also removed default XFCE keyboard shortcuts, set workspaces to #[strong 1], made HDMI audio the default, and removed unnecessary startup apps.
+    p The #[code server.py] script disables right-click menus for web apps so kiosk mode is enforced.
 
-    h2 The End Results
+    h2 Configuration & Behavior
 
-    p The project involved a fair bit of trial and error. I wanted to strip XFCE down as far as possible while still keeping #[strong xfce-settings-manager] and the rest of the XFCE toolset available. I did not want to start from scratch with a barebones window manager like openbox or fluxbox and then rebuild everything manually. It was easier to begin with a working XFCE system and remove what I did not need.
-    p The media center now boots quickly and opens the dashboard UI immediately. My setup includes:
+    p The dashboard uses JSON files for configuration: #[strong apps.json], #[strong tools.json], and #[strong weather.json]. Images dropped into #[strong static/backgrounds/] are discovered automatically and rotate with a dissolve effect.
+    p A #[strong fullscreen] option in the JSON forces apps fullscreen using #[code wmctrl]; this works for apps and dialogs (like #[code xfce4-settings-manager] and #[code nm-connection-editor]) so the interface feels more like a single-task Smart TV.
+    p For navigation I used #[code input-remapper-gtk] to program an MX3 Pro remote—home sends #[strong Alt+F4] to close the running app and return to the dashboard. Many apps include their own on-screen keyboards, and the remote's backlit keyboard is also usable.
+
+    h2 The Result
+
+    p The media center boots quickly and opens the dashboard UI immediately. My current setup includes:
     ul
         li #[a(href="https://flathub.org/en/apps/tv.plex.PlexHTPC", target="_blank") PlexHTPC]
         li #[a(href="https://jellyfin.org/", target="_blank") Jellyfin Desktop]
@@ -61,28 +56,19 @@ block content
         li Ring doorbell cam via #[a(href="https://www.scrypted.app/", target="_blank") Scrypted]
         li #[a(href="https://retroassembly.com/", target="_blank") RetroAssembly] from my home server Docker containers
         li #[a(href="https://localsend.org/", target="_blank") LocalSend] for easy file transfers
-        li #[a(href="https://flathub.org/en/apps/com.protonvpn.www", target="_blank") ProtonVPN Flatpak] that starts on boot and is automatically minimized with a bash script and #[code xdotool]
+        li #[a(href="https://flathub.org/en/apps/com.protonvpn.www", target="_blank") ProtonVPN Flatpak] that starts on boot and is automatically minimized
         li system tools for settings, logout/shutdown/reboot, network, Bluetooth, and audio
         li XFCE Terminal for quick edits to JSON config files or Flatpak installs
-
-    p The dashboard stays running as the home screen, and closing an app returns me to the same fullscreen interface. The #[code run_always.sh] script relaunches the dashboard if it exits, and Alt+F4 shows a confirmation prompt before it closes.
-    p Configuration remains simple: #[strong apps.json], #[strong tools.json], and #[strong weather.json] control the dashboard layout and behavior. Images dropped into #[strong static/backgrounds/] are discovered automatically and rotate with a dissolve effect.
-    p The JSON config includes a #[strong fullscreen] option that forces apps fullscreen even if they do not natively support it. This uses #[code wmctrl] to detect the open window and maximize it, and it works with dialogs such as #[code xfce4-settings-manager] and #[code nm-connection-editor].
-    p Forcing apps fullscreen means the only way back to the dashboard is to close them, which makes the system feel more like a Smart TV and a single-task interface.
-    p I can navigate through the apps with the arrow keys and use Tab to access the tools in the top right.
-    p I used #[code input-remapper-gtk] to program an MX3 Pro wireless PC remote. The home button sends #[strong Alt+F4] to close the running app and return to the dashboard. The remote also has an IR-programmable button that I set for my TV volume and power, so I can use one remote for most tasks.
-    p I considered adding #[code onboard], a Linux on-screen keyboard. However, the MX3 remote already has a usable keyboard on the back, and most apps like Plex and VacuumTube include their own on-screen keyboard.
+    p The dashboard stays pinned as the home screen; closing an app returns to the interface and the run_always.sh script ensures the dashboard relaunches if it exits.
 
     h2 Conclusion
 
-    p I have been running this setup for over a week, and I even built another one for my bedroom TV. It has been stable and useful, and I am still making small tweaks rather than reworking the whole system.
-    p The result is a simple, self-hosted media center with no ads, no tracking, and no Amazon sign-in. It only shows the apps I want, and everything is configurable through JSON and CSS.
-    p Using Debian and XFCE made it easier to get to a working system first, then remove what I did not need. That saved a lot of time compared to starting from a minimal window manager and rebuilding the environment from scratch.
-    p The dashboard feels more like a Smart TV home screen than a traditional desktop. Apps launch fullscreen, the interface stays pinned as the home screen, and a single remote can handle most tasks.
-    p If you want a clean living-room interface that is fully under your control, this setup is a good starting point. It can grow over time as you add more apps, tweak the layout, or swap in different web services.
+    p After a week of daily use the setup has been stable and useful. It provides a simple, self-hosted media center with no ads or tracking, showing only the apps I want.
+    p Starting from Debian and XFCE let me remove what I didn't need while keeping familiar tools like #[strong xfce-settings-manager], saving time versus rebuilding everything on a minimal window manager.
+    p If you want a clean living-room interface that's fully under your control, this is a good, configurable starting point.
 
     h3 Here is my current setup as of the writing of this blog post.
 
     img.img-fluid.mb-4.shadow-sm(src="/assets/images/dashboard_IMG_0985.jpg", alt="Photo of livingroom TV displaying the Smart Dashboard. A row of rectactular buttons and icons for various streaming services, apps and tools. Orange background photo of a ladybug")
 
-    p Check out the project on my Github: #[a(href="https://github.com/teklynk/smart-dashboard", target="_blank") https://github.com/teklynk/smart-dashboard]
+    p Check out the project on my Github: #[a(href="https://github.com/teklynk/smart-dashboard", target="_blank") https://github.com/teklynk/smart-dashboard"]
